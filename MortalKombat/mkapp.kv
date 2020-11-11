@@ -1,0 +1,259 @@
+<Gerenciador>:
+    Menu:
+        name: 'Menu'
+
+    Game:
+        name: 'Game'
+
+    Competitivo:
+        name: 'Competitivo'
+
+<Menu>:
+
+    BoxLayout:
+        size_hint_y: None
+        height:500
+        pos_hint:{'center_x':.5,'center_y':.5}
+        Image:
+            source:'icones/logo.png'
+            allow_stretch: True
+    BoxLayout:
+        orientation:'vertical'
+        size_hint:None, None
+        spacing: 20
+        width:400
+        height: 160
+        pos_hint:{'center_x':.5,'center_y':.5}
+
+        Botao:
+            opacity: .9
+            color: 0,0,.5,1
+            text:'Modo casual'
+            bold:True
+            font_size:30
+            on_release: app.root.current = 'Game'
+
+        Botao:
+            opacity:.9
+            color: 1,0,0,1
+            text: 'Modo competitivo'
+            bold:True
+            font_size:30
+            on_release: app.root.current = 'Competitivo'
+
+        Botao:
+            size_hint_x:None
+            width:65
+            font_size:25
+            bold:True
+            cor: .210,.200,.200,1
+            color:0,0,0,1
+#            opacity:.9
+            pos_hint:{'center_x':.5}
+            text:'Sair'
+            on_release:root.confirmar()
+
+
+#<Botao@ButtonBehavior+Label>:
+#    canvas.before:
+#        Color:
+#            rgba:.128,.128,.128,1
+#        Ellipse:
+#            size:self.height,self.height
+#            pos:self.pos
+#        Ellipse:
+#            size:self.height,self.height
+#            pos:self.x+self.width-self.height, self.y
+#        Rectangle:
+#            size:self.width-self.height,self.height
+#            pos:self.x+self.height/2.0, self.y
+
+<Competitivo>:
+    BoxLayout:
+        orientation: 'vertical'
+        pos_hit:{'center_x':.5}
+        ActionBar:
+            ActionView:
+                ActionPrevious:
+                    title:'Voltar'
+                    on_release: app.root.current = 'Menu'
+                ActionButton:
+                    text:'Exit'
+        Label:
+            font_size:40
+            bold:True
+            text:'Modo competitivo em desenvolvimento'
+
+<Game>:
+    FloatLayout:
+        BoxLayout:
+            # Caixa da imagen
+            size_hint_y:None
+            height:600
+            pos_hint: {'center_x':.5, 'center_y':.78}
+            orientation:'vertical'
+            spacing:20
+            ActionBar:
+                ActionView:
+                    ActionPrevious:
+                        title:'Voltar'
+                        on_release: app.root.current = 'Menu'
+                    ActionButton:
+                        text:'Exit'
+            Image:
+                size_hint_y:None
+                height:370
+                allow_stretch: True
+                pos_hint:{'center_x':.5, 'center_y':.9}
+                source:'icones/Cunglaw.png'
+
+        Label:
+            # Label que conta a quantidade de jogadores
+            size_hint:None, None
+            width:40
+            height:30
+            pos_hint:{'x':0, 'y': 0}
+            text:'0'
+            id: quant_jogador
+        Label:
+            size_hint:None, None
+            width:40
+            height:30
+            pos_hint:{'x':.08,'y':0}
+            color: 1,0,0,.8
+            text:'Jogadores'
+        Label:
+            # Label do terceiro Nome
+            size_hint:None, None
+            width:40
+            height:30
+            pos_hint:{'center_x':.83,'center_y':.37}
+            font_size:20
+            bold: True
+            color: 1,0,0,.5
+            text:'Proximo'
+            id: lb_nome3
+        BoxLayout:
+            # Caixa do contador de vitórias
+            size_hint:None, None
+            width:110
+            height:100
+            pos_hint:{'center_x':.10,'center_y': .54}
+            Label:
+                # Label de contar vitoria
+                font_size:29
+                size_hint_x:None
+                width:50
+                text:'0'
+                id: lb_cont
+            Label:
+                font_size:20
+                bold:True
+                color: 1,0,0,1
+                text:'Vitoria'
+                id: str_vitoria
+        CheckBox:
+            size_hint:None, None
+            pos_hint:{'center_x':.06, 'center_y':.38}
+            active: True
+            id:check_vitoria
+            on_press: root.lb_check()
+
+        Label:
+            size_hint:None, None
+            pos_hint: {'x':.1, 'center_y':.38}
+            color: 1,0,0,1
+            bold: True
+            text:'Vitoria Ligada'
+            id: lb_vitoria
+    # =================== Botões celecionar jogadores =======
+        BoxLayout:
+            # Caixa dos botões dos jogadores
+            size_hint_y:None
+            height: self.minimum_height
+            pos_hint:{'center_x':.5, 'center_y':.5}
+            spacing:40
+            padding:20
+            Botao:
+                size_hint_y:None
+                height:40
+                bold: True
+                font_size:25
+#                background_color: 0,0,.5,1
+                cor:0,0,.5,1
+                color: 1,0,0,1
+                text:'Primeiro nome'
+                id: nome1
+                on_release: root.passando_nome1()
+            Button:
+                size_hint_y:None
+                height:100
+                bold: True
+                font_size:80
+                pos_hint:{'center_x':.5, 'center_y':.2}
+                color: 1,0,0,1
+                text:'VS'
+                opacity:.5
+                on_release: root.destribui_nome()
+
+            Botao:
+                size_hint_y:None
+                height:40
+                bold: True
+                font_size:25
+                cor: 0,0,.5,1
+                color: 1,0,0,1
+                text:'Segundo nome'
+                id: nome2
+                on_release: root.passando_nome2()
+        BoxLayout:
+            orientation:'vertical'
+            pos_hint:{'center_x':.5,'center_y':.2}
+            size_hint:None, None
+            x:300
+            y:40
+
+            Label:
+                color: 1,0,0,1
+                text:'Digite os nomes dos jogadores'
+                id: lb_entrada
+            TextInput:
+                size_hint:None, None
+                width:150
+                height:30
+                pos_hint:{'center_x':.5}
+                id: entrada
+            Botao:
+                size_hint:.5, .6
+                pos_hint:{'center_x':.5}
+#                background_color: 0,0,.5,1
+                cor:0,0,.5,1
+                color: 1,0,0,1
+                text:'Save'
+                on_release: root.add_lista()
+
+        BoxLayout:
+            size_hint:.20, .05
+#            width:250
+#            height: 30
+            pos_hint:{'right': 1,'y':0}
+            Button:
+                background_color: 0,0,.5,1
+                bold: True
+                color: 1,0,0,0.5
+                text: 'Voltar'
+                on_release: root.retroceder()
+
+            Button:
+                background_color: 0,0,.5,1
+                bold: True
+                color: 1,0,0,0.5
+                text:'Deletar'
+                on_release: root.deleta()
+
+            Button:
+                background_color: 0,0,.5,1
+                bold: True
+                color: 1,0,0,0.5
+                text: 'Exit'
+                on_release: root.sair()
