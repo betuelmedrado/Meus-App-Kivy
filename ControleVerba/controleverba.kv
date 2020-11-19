@@ -1,0 +1,359 @@
+# -*- coding: utf-8 -*-
+# Controle de Finanças
+<Gerenciador>:
+    Menu:
+        name:'Menu'
+    Adicionar:
+        name: 'Adicionar'
+    Visualizar:
+        name: 'Visualizar'
+    TelaTotal:
+        name:'TelaTotal'
+
+<Menu>:
+    BoxLayout:
+        BoxLayout:
+            orientation:'vertical'
+            size_hint_y:.7
+            padding:20
+            spacing:30
+            pos_hint:{'center_y':.41}
+            Botaos:
+                font_size:dp('30')
+                text:'Adicionar'
+                outline_width:3
+                outline_color:0,0,0
+                bold:True
+                on_release: app.root.current = 'Adicionar'
+            Botaos:
+                font_size:dp('30')
+                bold:True
+                text:'Visualizar'
+                outline_width:3
+                outline_color:0,0,0
+                on_release: app.root.current = 'Visualizar'
+            Botaos:
+                font_size:dp('30')
+                bold:True
+                text:'Total'
+                outline_width:3
+                outline_color:0,0,0
+                on_release: app.root.current = 'TelaTotal'
+            Botaos:
+                size_hint:.3,.5
+                text:'Sair'
+                outline_width:3
+                outline_color:0,0,0
+                pos_hint:{'center_x':.5}
+                on_release:root.confirmar()
+
+        FloatLayout:
+            Label:
+                pos_hint:{'center_x':.0,'center_y':.9}
+                font_size:'50sp'
+                bold:True
+                color:0,1,1,1
+                text:'Controle Financeiro'
+                id:lb_menu
+                underline:True
+                outline_width:2
+#                outline_color:1,0,0
+#                disabled_outline_color:True
+
+            BoxLayout:
+                size_hint_y:.15
+                pos_hint:{'center_x':.25,'center_y':.66}
+                Image:
+                    allow_stretch:True
+                    source:'image/dinheiro-icone-2.png'
+            BoxLayout:
+                size_hint_y:.15
+                pos_hint:{'center_x':.25,'center_y':.47}
+                Image:
+                    allow_stretch:True
+                    source:'image/dinheiro2.png'
+            BoxLayout:
+                size_hint_y:.15
+                pos_hint:{'center_x':.25,'center_y':.27}
+                Image:
+                    allow_stretch:True
+                    source:'image/dividir2.png'
+
+
+#    Label:
+#        pos_hint:{'center_x':.5,'center_y':.55}
+#        color:.2,0,1,1
+#        text:'com'
+#        id:confere
+
+
+<Adicionar>:
+
+    FloatLayout:
+#        size_hint:None,None
+#        width:root.width
+#        height:root.height
+        pos_hint:{'center_x':.5,'center_y':.5}
+#        Image:
+#            size_hint_y: 1
+#            source:'image/Moedas2.png'
+#            allow_stretch: True
+    BoxLayout:
+        orientation:'vertical'
+        ActionBar:
+            ActionView:
+                ActionPrevious:
+                    on_release: app.root.current = 'Menu'
+
+        BoxLayout:
+            orientation:'vertical'
+            BoxLayout:
+                Label:
+                    size_hint_x:None
+                    width:sp('170')
+                    pos_hint:{'center_x':.15,'center_y':.8}
+                    text:'Modelo'
+                    color: .1,0,1,1
+                    font_size:sp('20')
+                    bold:True
+                    id:modelo
+                TextInput:
+                    size_hint:3,None #dp.2,.05
+                    height:'26sp'
+                    pos_hint:{'center_x':.5,'center_y':.8}
+                    id:text_modelo
+                Label:
+
+            BoxLayout:
+                Label:
+                    size_hint_x:None
+                    width:'170sp'
+                    pos_hint:{'center_x':.15,'center_y':.8}
+                    text:'Local'
+                    color: .1,0,1,1
+                    font_size:sp('20')
+                    bold:True
+                    id:local
+                TextInput:
+                    size_hint:3,None
+                    height:'26sp'
+                    pos_hint:{'center_x':.5,'center_y':.8}
+                    id:text_local
+                Label:
+
+            BoxLayout:
+                Label:
+                    size_hint_x:None
+                    width:sp('150')
+                    text:'Valor'
+                    pos_hint:{'center_x':.5,'center_y':.8}
+                    color: .1,0,1,1
+                    font_size:sp('20')
+                    bold:True
+                    id:valor
+                Label:
+                    size_hint_x:None
+                    width:dp('20')
+                    text:'R$'
+                    color:1,1,1,1
+                    pos_hint:{'center_x':.2,'center_y':.8}
+                TextInput:
+                    size_hint:.2,None
+                    height:'26sp'
+                    pos_hint:{'center_x':.5,'center_y':.8}
+                    id:text_valor
+                Label:
+
+# Aqui adiciona os gastos
+        BoxLayout:
+            orientation:'vertical'
+            spacing:'20sp'
+            Label:
+                text:'Valores gastos'
+                id:valor_gastos
+                font_size:'30sp'
+                color: 1,0,0,1
+                pos_hint:{'center_x':.5,'center_y':1}
+            BoxLayout:
+                Label:
+                    size_hint_x:None
+                    width:sp('170')
+                    pos_hint:{'center_x':.15,'center_y':.8}
+                    text:'Eventos'
+                    color: 1,0,0,1
+                    font_size:sp('20')
+                    bold:True
+                TextInput:
+                    size_hint:3,None #dp.2,.05
+                    height:'26sp'
+                    pos_hint:{'center_x':.5,'center_y':1}
+                    id:text_eventos
+                Label:
+
+            BoxLayout:
+                Label:
+                    size_hint_x:None
+                    width:sp('150')
+                    text:'Gastos'
+                    pos_hint:{'center_x':.5,'center_y':.8}
+                    color: 1,0,0,1
+                    font_size:sp('20')
+                    bold:True
+                Label:
+                    size_hint_x:None
+                    width:dp('20')
+                    text:'R$'
+                    color:1,1,1,1
+                    pos_hint:{'center_x':.2,'center_y':.8}
+                TextInput:
+                    size_hint:.2,None
+                    height:'26dp'
+                    pos_hint:{'center_x':.5,'center_y':.8}
+                    id:text_gastos
+                Label:
+
+        Button:
+            size_hint_y:None
+            height:'50sp'
+            text:'Save'
+            bold:True
+            on_release:root.SaveData()
+
+<CorFund@Label>:
+    # class da cor de fundo
+    canvas.before:
+        Color:
+            rgba:.2,.4,.5,.5
+        Rectangle:
+            size:self.size
+            pos:self.pos
+
+<Visualizar>:
+    CorFund:
+    BoxLayout:
+        orientation:'vertical'
+        ActionBar:
+            ActionView:
+                ActionPrevious:
+                    on_release: app.root.current = 'Menu'
+                ActionButton:
+
+        BoxLayout:
+            padding:10
+            orientation:'vertical'
+            size_hint_y:None
+            height:sp('60')
+            Label:
+                #Label: Data, Modelo, Local, Valor
+                size_hint_x:.03
+                font_size:self.width
+                color:.5,0,0,1
+                bold: True
+                pos_hint:{'x':.45,'center_y':1}
+                id:super_modelo_text
+
+        BoxLayout:
+            id:box_valor
+            ScrollView:
+#               para ser adicionado os valores aqui
+                BoxLayout:
+                    orientation:'vertical'
+                    size_hint_y: None
+                    height: self.minimum_height
+                    id: coteiner
+        BoxLayout:
+            size_hint_y:None
+            height:'30sp'
+            Label:
+                bold:True
+                font_size:30
+                id:total_valor
+
+<Box>:
+    # A widget dos Valores para ser adicionado a TelaBanco
+    padding:10
+    orientation:'vertical'
+    size_hint_y:None
+    height: dp('60')
+    CorFund:
+    Label:
+        size_hint_x:.03
+        font_size:self.width
+        text_size:None,None
+        pos_hint:{'center_x':.5,'center_y':.5}
+        id:texto
+
+
+
+<TelaTotal>:
+    BoxLayout:
+        orientation:'vertical'
+        spacing:15
+        ActionBar
+            ActionView
+                ActionPrevious
+                    on_release:app.root.current = 'Menu'
+        BoxLayout:
+            orientation:'vertical'
+            FloatLayout:
+                Label:
+                    size_hint:None,None
+                    size:(.2,.2)
+                    pos_hint:{'center_x':.2,'center_y':.99}
+                    text:'Somas dos Valores:'
+                Label:
+                    pos_hint:{'x':.0,'center_y':.99}
+                    font_size:'20sp'
+                    id: Valor_soma
+                Label:
+                    pos_hint:{'center_x':.5,'center_y':.8}
+                    font_size:'20sp'
+                    text:'-------- Divisao --------'
+                Label:
+                    size_hint_x:None
+                    x:.05
+                    pos_hint:{'x':.20,'center_y':.6}
+                    font_size:'25sp'
+                    bold:True
+                    text:'60% :'
+                Label:
+                    font_size: '15sp'
+                    pos_hint:{'x':.00,'center_y':.6}
+                    id:valor_60
+
+                Label:
+                    size_hint_x:None
+                    x:.05
+                    pos_hint:{'x':.20,'center_y':.4}
+                    font_size:'25sp'
+                    bold:True
+                    text:'40% : '
+                Label:
+                    font_size:'15sp'
+                    pos_hint:{'x':.00,'center_y':.4}
+                    id:valor_40
+
+                Label:
+                    pos_hint:{'center_x':.5,'center_y':.1}
+                    font_size: '20sp'
+                    text:'-------- Gastos ---------'
+#                Label:
+#                    size_hint_x:None
+#                    x:.05
+#                    pos_hint:{'x':.1,'center_y':.39}
+#                    text:'Valor dos Gastos:'
+
+            BoxLayout:
+                canvas:
+                    Color:
+                        rgba:0,0,.4,1
+                    Rectangle:
+                        size:self.width,self.height
+                        pos:self.pos
+                ScrollView
+                    orientation:'vertical'
+                    BoxLayout:
+                        orientation:'vertical'
+                        size_hint_y:None
+                        height: self.minimum_height
+                        id:gastos
