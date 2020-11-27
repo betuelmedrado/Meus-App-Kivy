@@ -2,6 +2,8 @@
 import kivy
 kivy.require('1.9.1')
 
+# Testing github with pycharm
+
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.window import Window
