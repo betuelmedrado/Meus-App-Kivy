@@ -84,7 +84,7 @@ class Setting(Screen):
 
         box = BoxLayout(orientation='vertical')
         pop = Popup(title='Deseja limpar o diretórios de arquivos?',size_hint=(None,None),
-                    width='200dp',height='150sp',content=box)
+                    width='200dp',height='150dp',content=box)
         box_botao = BoxLayout(spacing=5,padding=3)
         image = Image(source='image/atencao.png')
 
@@ -114,14 +114,6 @@ class Menu(Screen):
         self.dados_usuario = App.get_running_app().user_data_dir + '/'
 
 
-    def path(self):
-        # Cria um diretorio separado para receber os arquivos
-        try:
-            os.mkdir('arq')
-        except FileExistsError:
-            pass
-
-
     def on_pre_enter(self):
         Window.bind(on_request_close=self.confirmar)
         # self.ids.lb_menu.text = 'Controle de Finanças'
@@ -131,7 +123,6 @@ class Menu(Screen):
             self.pop_sound = SoundLoader.load('poppap.mp3')
 
         # Criando os arquivo logo quando abrir o app
-        self.path()
         if self.dados_usuario+'arq_eventos.txt' and self.dados_usuario+'arq/gastos.txt':
             pass
         else:
@@ -149,7 +140,7 @@ class Menu(Screen):
 
         box = BoxLayout(spacing='10dp',orientation='vertical')
         pop = Popup(title='Deseja realmente sai?', size_hint=(None,None),
-                    size=('200sp','150sp'),content=box)
+                    size=('200dp','150dp'),content=box)
         box_bt = BoxLayout(spacing='13dp',size_hint_y=None,height='30sp')
 
         image = Image(source='image/atencao.png')
