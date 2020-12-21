@@ -23,7 +23,8 @@ import os
 import shutil
 from time import sleep
 
-# Window.size = 600, 700
+
+
 class Gerenciador(ScreenManager):
     pass
 
@@ -84,7 +85,7 @@ class Setting(Screen):
 
         box = BoxLayout(orientation='vertical')
         pop = Popup(title='Deseja limpar o diretórios de arquivos?',size_hint=(None,None),
-                    width='200dp',height='150dp',content=box)
+                    width='200dp',height='150sp',content=box)
         box_botao = BoxLayout(spacing=5,padding=3)
         image = Image(source='image/atencao.png')
 
@@ -113,12 +114,9 @@ class Menu(Screen):
         super(Menu,self).__init__(**kwargs)
         self.dados_usuario = App.get_running_app().user_data_dir + '/'
 
-
     def on_pre_enter(self):
         Window.bind(on_request_close=self.confirmar)
-        # self.ids.lb_menu.text = 'Controle de Finanças'
-
-        # Adicionando o som do pupap
+        # Adicionando o som do pupap carrega osom na variavel
         if self.pop_sound == None:
             self.pop_sound = SoundLoader.load('poppap.mp3')
 
@@ -135,12 +133,21 @@ class Menu(Screen):
             with open(self.dados_usuario+'SaveData.json','w') as data:
                 data.close()
 
+        # Tenta abrir o arquivo porcentagen para saber se existe se não existir cria um com um valor
+        try:
+            porcento = open('porcentagen.txt','r')
+        except FileNotFoundError:
+            porcento = open('porcentagen.txt','w')
+            porcento.write('100')
+
+
+
     def confirmar(self,*args,**kwargs):
         self.pop_sound.play()
 
         box = BoxLayout(spacing='10dp',orientation='vertical')
         pop = Popup(title='Deseja realmente sai?', size_hint=(None,None),
-                    size=('200dp','150dp'),content=box)
+                    size=('200sp','150sp'),content=box)
         box_bt = BoxLayout(spacing='13dp',size_hint_y=None,height='30sp')
 
         image = Image(source='image/atencao.png')
@@ -220,7 +227,7 @@ class Adicionar(Screen,Data):
 
 
     def on_pre_enter(self):
-        self.ids.lb_title.text = str('Adicione os cerviços e os gastos')
+        self.ids.lb_title.text = str('Cerviços')
         self.get = self.ids.mensagen_add.text
         self.dados_usuario = App.get_running_app().user_data_dir + '/'
         Window.bind(on_keyboard=self.voltar)
@@ -497,7 +504,7 @@ class TelaTotal(Screen,Data):
 
         coteiner = BoxLayout(orientation='vertical')
         pop = Popup(title='Deseja realmente excluir?', content=coteiner, size_hint=(None, None),
-                    size=('200dp', '150dp'))
+                    size=('150dp', '150dp'))
 
         image = Image(source='image/atencao.png')
         bt_box = BoxLayout(spacing=11,padding=5)
