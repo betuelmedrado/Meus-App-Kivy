@@ -21,9 +21,6 @@ from kivy.animation import Animation
 import json
 import os
 import shutil
-from time import sleep
-
-
 
 class Gerenciador(ScreenManager):
     pass

@@ -26,32 +26,32 @@
                     size_hint:None,None
                     width:'100dp'
                     height:'30dp'
-                    pos_hint:{'center_x':.6,'center_y':.8}
+                    pos_hint:{'center_x':.5,'center_y':.8}
                     text:'Clear'
                     on_release:root.popap()
 
                 Label:
-                    pos_hint:{'center_x':.3,'center_y':.8}
+                    pos_hint:{'x':0,'center_y':.9}
                     font_size:'20sp'
                     text:'Limpar o diretorio de arquivos '
 
                 Label:
-                    pos_hint:{'center_x':.3,'center_y':.7}
-                    font_size:'20sp'
+                    pos_hint:{'center_x':.5,'center_y':.7}
+                    font_size:'15sp'
                     text:'Defina a sua porcentagen'
                 TextInput:
                     size_hint:None,None
                     width:'40sp'
                     height:'30sp'
-                    pos_hint:{'center_x':.56,'center_y':.7}
+                    pos_hint:{'center_x':.5,'center_y':.6}
                     id:df_porcentagen
                 Label:
                     font_size:'20sp'
-                    pos_hint:{'center_x':.6,'center_y':.7}
+                    pos_hint:{'center_x':.6,'center_y':.6}
                     text:'%'
                 Label:
-                    pos_hint:{'x':.0,'center_y':.6}
-                    text:'Apos incerir a porcentagen o programa recebe altomaticamente o valor'
+                    pos_hint:{'x':.0,'center_y':.5}
+                    text:'Apos incerir a porcentagen o programa recebe \n altomaticamente o valor!'
                 Label:
                     pos_hint:{'center_y':.1}
                     id:mensagen_setting
@@ -60,8 +60,8 @@
         BoxLayout:
             orientation:'vertical'
             size_hint_y:.7
-            padding:20
-            spacing:30
+            padding:'10sp'
+            spacing:'25sp'
             pos_hint:{'center_y':.41}
             Botaos:
                 font_size:'30sp'
@@ -85,7 +85,7 @@
                 outline_color:0,0,0
                 on_release: app.root.current = 'TelaTotal'
             Botaos:
-                size_hint:.3,.5
+                size_hint:.4,.5
                 text:'Sair'
                 outline_width:3
                 outline_color:0,0,0
@@ -93,7 +93,6 @@
                 on_release:root.confirmar()
 
         BoxLayout:
-
             FloatLayout:
                 Label:
                     pos_hint:{'center_x':.0,'center_y':.9}
@@ -167,6 +166,7 @@
                     text:'Setting'
                     on_release:app.root.current='setting'
 
+
         BoxLayout:
             orientation:'vertical'
             BoxLayout:
@@ -179,7 +179,7 @@
                         size:self.width,self.height
                         pos:self.pos
                 Label:
-                    font_size:'30sp'
+                    font_size:'25sp'
                     color:0,0,0,1
 #                    pos_hint:{'center_y':1}
                     bold:True
@@ -194,13 +194,13 @@
                 height:'30dp'
                 Label:
                     size_hint_x:None
-                    width:sp('170')
+                    width:'100sp'
                     pos_hint:{'x':.15,'center_y':.8}
                     text:'Modelo'
                     color: 0.5,0.9,0.7,1
-                    font_size:sp('20')
+                    font_size:'20sp'
                     bold:True
-                    outline_width:1
+                    outline_width:2
                     id:modelo
                 TextInput:
                     size_hint:3,None #dp.2,.05
@@ -214,13 +214,13 @@
                 height:'30dp'
                 Label:
                     size_hint_x:None
-                    width:'170sp'
+                    width:'100sp'
                     pos_hint:{'x':.15,'center_y':.8}
                     text:'Local'
                     color: 0.5,0.9,0.7,1
                     font_size:sp('20')
                     bold:True
-                    outline_width:1
+                    outline_width:2
                     id:local
                 TextInput:
                     size_hint:3,None
@@ -234,13 +234,13 @@
                 height:'30dp'
                 Label:
                     size_hint_x:None
-                    width:sp('150')
+                    width:'100sp'
                     text:'Valor'
                     pos_hint:{'x':.15,'center_y':.8}
                     color: 0.5,0.9,0.7,1
-                    font_size:sp('20')
+                    font_size:'20sp'
                     bold:True
-                    outline_width:1
+                    outline_width:2
                     id:valor
                 Label:
                     size_hint_x:None
@@ -258,7 +258,7 @@
             BoxLayout:
                 Label:
                     color:0,0,0,1
-                    text:'Adicione a cima o modelo do carro/moto, local e valor'
+                    text:'Adicione a cima o modelo do carro/moto, \nlocal e valor'
                     id:mensagen_add
 
     # Aqui adiciona os gastos
@@ -271,7 +271,7 @@
                 font_size:'25sp'
                 color: 1,0,0,1
                 outline_width:3
-                outline_color:1,1,1
+                outline_color:0,0,0,1
                 underline:3
                 pos_hint:{'center_x':.5,'center_y':1}
             BoxLayout:
@@ -279,11 +279,13 @@
                 height:'20dp'
                 Label:
                     size_hint_x:None
-                    width:sp('170')
+                    width:'100sp'
                     pos_hint:{'center_x':.15,'center_y':.8}
                     text:'Eventos'
                     color: 1,0,0,1
                     font_size:sp('20')
+                    outline_width:2
+                    outline_color:0,0,0,1
                     bold:True
                 TextInput:
                     size_hint:3,None #dp.2,.05
@@ -297,17 +299,21 @@
                 height:'20dp'
                 Label:
                     size_hint_x:None
-                    width:sp('150')
+                    width:'100sp'
                     text:'Gastos'
                     pos_hint:{'center_x':.5,'center_y':.8}
                     color: 1,0,0,1
                     font_size:sp('20')
+                    outline_width:2
+                    outline_color:0,0,0,1
                     bold:True
                 Label:
                     size_hint_x:None
                     width:dp('20')
                     color: 1,0,0,1
                     text:'R$'
+                    outline_width:2
+                    outline_color:0,0,0,1
                     pos_hint:{'center_x':.2,'center_y':.8}
                 TextInput:
                     size_hint:.3,None
@@ -426,6 +432,8 @@
         size_hint_y:None
         height: sp('50')
         CorFund:
+            size_hint_y:None
+            height:'5sp'
         Label:
             size_hint_x:.03
             font_size:self.width
@@ -434,8 +442,8 @@
             id:texto
     Button:
         size_hint:None,None
-        width:30
-        height:40
+        width:'30sp'
+        height:'40sp'
         pos_hint:{'center_y':.5}
         background_color:1,0,0,1
         text:'X'
@@ -454,16 +462,18 @@
         size_hint_y:None
         height: sp('50')
         CorFund:
+            size_hint_y:None
+            height:'5sp'
         Label:
             size_hint_x:.03
-            font_size:self.width
+            font_size:'15sp'
             text_size:None,None
-            pos_hint:{'center_x':.5,'center_y':.5}
+            pos_hint:{'center_x':.5,'center_y':0}
             id:texto
     Button:
         size_hint:None,None
-        width:30
-        height:40
+        width:'30sp'
+        height:'40sp'
         pos_hint:{'center_y':.5}
         background_color:1,0,0,1
         text:'X'
