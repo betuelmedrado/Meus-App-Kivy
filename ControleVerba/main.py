@@ -21,7 +21,9 @@ from kivy.animation import Animation
 import json
 import os
 import shutil
+from time import sleep
 
+# Window.size = 350, 500
 class Gerenciador(ScreenManager):
     pass
 
@@ -65,7 +67,6 @@ class Setting(Screen):
         if porcentagen != '':
             arq_porcentagen = open('porcentagen.txt','w')
             arq_porcentagen.write(porcentagen)
-
 
     def limpar(self,*args,**kwargs):
         pasta = self.dados_usuario
@@ -118,7 +119,7 @@ class Menu(Screen):
             self.pop_sound = SoundLoader.load('poppap.mp3')
 
         # Criando os arquivo logo quando abrir o app
-        if self.dados_usuario+'arq_eventos.txt' and self.dados_usuario+'arq/gastos.txt':
+        if self.dados_usuario+'arq_eventos.txt' and self.dados_usuario+'gastos.txt':
             pass
         else:
             data = open(self.dados_usuario+'arq_eventos.txt','w')
@@ -436,8 +437,6 @@ class Visualizar(Screen,Data):
 
         ##################################################################
 
-
-
 class TelaTotal(Screen,Data):
     soma = 0
     def __init__(self,**kwargs):
@@ -501,7 +500,7 @@ class TelaTotal(Screen,Data):
 
         coteiner = BoxLayout(orientation='vertical')
         pop = Popup(title='Deseja realmente excluir?', content=coteiner, size_hint=(None, None),
-                    size=('150dp', '150dp'))
+                    size=('200dp', '150dp'))
 
         image = Image(source='image/atencao.png')
         bt_box = BoxLayout(spacing=11,padding=5)
