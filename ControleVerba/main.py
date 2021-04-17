@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# version 2.0.0
 
 from kivy import require
 require('1.9.1')
@@ -16,9 +15,10 @@ from kivy.uix.image import Image
 from kivy.uix.behaviors.button import ButtonBehavior
 from kivy.graphics import Ellipse, Rectangle, Color
 from kivy.properties import ListProperty
-# from kivy.core.audio import SoundLoader
+from kivy.core.audio import SoundLoader
 from kivy.uix.label import Label
 from kivy.animation import Animation
+from kivy.lang.builder import Builder
 import json
 import os
 import shutil
@@ -26,6 +26,8 @@ from kivy.clock import Clock
 from datetime import date
 
 # Window.size = 350, 500
+
+Window.clearcolor = .1,.1,.1,1
 class Gerenciador(ScreenManager):
     pass
 
@@ -55,8 +57,6 @@ class Botaos(ButtonBehavior,Label):
             Ellipse(size=(self.height,self.height),pos=(self.x,self.y))
             Ellipse(size=(self.height,self.height),pos=(self.x+self.width-self.height,self.y))
             Rectangle(size=(self.width-self.height,self.height),pos=(self.x+self.height/2, self.y))
-
-
 
 # pos_mes = 2
 # dia_teste = 23
@@ -109,20 +109,26 @@ class Setting(Screen):
         porcentagen = str(self.ids.df_porcentagen.text)
         self.ids.mensagen_setting.text = ''
         if porcentagen != '':
-            arq_porcentagen = open('porcentagen.txt','w')
-            arq_porcentagen.write(porcentagen)
+            if 'a'< porcentagen > 'z' or 'A'< porcentagen > 'Z':
+                App.get_running_app().root.current = "setting"
+                self.ids.mensagen_setting.text = "[color=990000ff][size=18sp]Informação de porcentagen incorretas![/size][/color]"
+                Clock.schedule_once(self.retornar_msg, 7)
+            else:
+                arq_porcentagen = open('porcentagen.txt','w')
+                arq_porcentagen.write(porcentagen)
         if self.ids.fechamento1.text != '' :
             try:
-                if int(self.ids.fechamento1.text) > 31 or int(self.ids.fechamento2.text) > 31 :
+                if int(self.ids.fechamento1.text) > 31 or int(self.ids.fechamento2.text) > 31:
                     App.get_running_app().root.current = "setting"
-                    self.ids.mensagen_setting.text = "Informação do fechamento incorreta!"
-                    Clock.schedule_once(self.retornar_msg,7)
+                    self.ids.mensagen_setting.text = "[color=990000ff][size=18sp]Informação de fechamento incorretas![/size][/color]"
+                    Clock.schedule_once(self.retornar_msg, 7)
+                else:
+                    file_fechamento = open('fechamento.txt', 'w')
+                    file_fechamento.write(f'{self.ids.fechamento1.text}\n')
+                    file_fechamento.write(self.ids.fechamento2.text)
+
             except ValueError:
                 pass
-
-            file_fechamento = open('fechamento.txt','w')
-            file_fechamento.write(f'{self.ids.fechamento1.text}\n')
-            file_fechamento.write(self.ids.fechamento2.text)
 
         file_step_spiner = open('step_spiner.txt','w',encoding='utf-8')
         file_step_spiner.write(self.ids.spiner_month.text.strip().lower())
@@ -151,6 +157,7 @@ class Setting(Screen):
 
     def excluir_mes(self,*args):
         """
+        Function to exclud the folder of month choincing
         Função para excluir a pasta do mês escolhido
         :return:
         """
@@ -237,6 +244,7 @@ class Menu(Screen):
         self.file_month = ''
 
         self.validng_month()
+
         # open or creats the month files
         # abre ou cria os arquivos mês
         try:
@@ -321,7 +329,7 @@ class Menu(Screen):
         if self.file_fechamento2 != 0:
             if self.day >= self.file_fechamento2:
                 lem = 0
-                l = ''
+                l = None
                 try:
                     # this "if" is to close the day of month
                     valor = open(self.dados_usuario + self.lista_month[self.pos_month - 1] + "/" + "Valores.txt", 'r')
@@ -332,6 +340,7 @@ class Menu(Screen):
 
                 try:
                     lem_file_values = open(self.dados_usuario + self.lista_month[self.pos_month - 1] + '/' + 'lem_file_values.txt', 'r')
+                    print(lem_file_values)
                     lem_file_values.read()
                     lem_file_values.close()
                     l = True
@@ -449,11 +458,11 @@ class Menu(Screen):
         # self.creat_file()
 
         # Adicionando o som do pupap carrega osom na variavel
-        # if self.pop_sound == None:                        # ==================== soudloader
-        #     self.pop_sound = SoundLoader.load('poppap.mp3')
+        if self.pop_sound == None:                        # ==================== soudloader
+            self.pop_sound = SoundLoader.load('poppap.mp3')
 
     def confirmar(self,*args,**kwargs):
-        # self.pop_sound.play()
+        self.pop_sound.play()
 
         box = BoxLayout(spacing='10dp',orientation='vertical')
         pop = Popup(title='Deseja realmente sai?', size_hint=(None,None),
@@ -637,50 +646,54 @@ class Adicionar(Screen,Data):
             Clock.schedule_once(self.retorna_mesagens, 5)
 
         elif gastos != 0 and eventos == '':
-            self.ids.mensagen_gastos.text = 'Compo Eventos não preenchidos'
+            self.ids.mensagen_gastos.text = 'Campo Eventos não preenchidos'
             self.ids.mensagen_add.text = self.get
             Clock.schedule_once(self.retorna_mesagens, 5)
 
-        elif gastos != 0 and eventos != '':
-            self.ids.mensagen_sobra.text = 'Digitos invalido no campo gastos "Só numeros"'
+        # elif gastos != 0 and eventos != '':
+        #     self.ids.mensagen_sobra.text = 'Digitos invalido no campo gastos "Só numeros"'
         elif eventos != '' and gastos == 0:
             self.ids.mensagen_gastos.text = 'Campo gastos não preenchidos '
             Clock.schedule_once(self.retorna_mesagens, 5)
             self.ids.mensagen_add.text = self.get
 
         if valor_int != '':
-            try:
-                # Aqui é para a self.lista receber os conteudos do arquivo json
-                with open(self.dados_usuario+'/'+'SaveData.json', 'r') as dados:
-                    self.lista = json.load(dados)  # Aqui é para a lista sempre receber o conteudo do arquivo json primeiro
+            if 'a'<= valor_int <='z':
+                self.ids.mensagen_add.text = 'O valor só pode conter números!'
+                Clock.schedule_once(self.retorna_mesagens,5)
+            else:
+                try:
+                    # Aqui é para a self.lista receber os conteudos do arquivo json
+                    with open(self.dados_usuario+'/'+'SaveData.json', 'r') as dados:
+                        self.lista = json.load(dados)  # Aqui é para a lista sempre receber o conteudo do arquivo json primeiro
+                        self.lista.append(f'{self.data:<25} {modelo:<30} {local:<25} {float(valor_int):>8} R$')
+                        self.ids.text_modelo.text = ''
+                        self.ids.text_local.text = ''
+                        self.ids.text_valor.text = ''
+
+                except:
                     self.lista.append(f'{self.data:<25} {modelo:<30} {local:<25} {float(valor_int):>8} R$')
-                    self.ids.text_modelo.text = ''
-                    self.ids.text_local.text = ''
-                    self.ids.text_valor.text = ''
-
-            except:
-                self.lista.append(f'{self.data:<25} {modelo:<30} {local:<25} {float(valor_int):>8} R$')
-                # self.ids.mensagen_add.text = 'Nada foi salvo'
-                self.get = self.ids.mensagen_add.text
-
-            try:
-                # criando um arquivo json e recebendo os conteudo da lista
-                with open(self.dados_usuario+'/'+'SaveData.json', 'w') as data:
-                    json.dump(self.lista, data)
-                    self.ids.text_modelo.text = ''
-                    self.ids.text_local.text = ''
-                    self.ids.text_valor.text = ''
-
-                    try:
-                        # criando um arquivo Valores
-                        self.valor('Valores.txt', str(int(valor_int)))
-                    except ValueError:
-                        pass
-                    self.ids.mensagen_add.text = 'Arquivos salvos com sucesso!'
+                    # self.ids.mensagen_add.text = 'Nada foi salvo'
                     self.get = self.ids.mensagen_add.text
-                    Clock.schedule_once(self.retorna_mesagens,5)
-            except FileNotFoundError:
-                pass
+
+                try:
+                    # criando um arquivo json e recebendo os conteudo da lista
+                    with open(self.dados_usuario+'/'+'SaveData.json', 'w') as data:
+                        json.dump(self.lista, data)
+                        self.ids.text_modelo.text = ''
+                        self.ids.text_local.text = ''
+                        self.ids.text_valor.text = ''
+
+                        try:
+                            # criando um arquivo Valores
+                            self.valor('Valores.txt', str(int(valor_int)))
+                        except ValueError:
+                            pass
+                        self.ids.mensagen_add.text = 'Arquivos salvos com sucesso!'
+                        self.get = self.ids.mensagen_add.text
+                        Clock.schedule_once(self.retorna_mesagens,5)
+                except FileNotFoundError:
+                    pass
 
         try:
             if gastos != 0 and eventos != '':
@@ -695,7 +708,7 @@ class Adicionar(Screen,Data):
 
 
     def retorna_mesagens(self,*args):
-        self.ids.mensagen_gastos.text = 'Adicione os gastos com eventos ocorridos e valores'
+        self.ids.mensagen_gastos.text = 'Adicione os gastos com eventos ocorridos e\n valores.'
         self.ids.mensagen_add.text = 'Adicione a cima o modelo do carro/moto, \nlocal e valor'
 
     def voltar(self,window,key,*args):
@@ -896,6 +909,7 @@ class Visualizar(Screen,Data):
 
 class TelaTotal(Screen,Data):
     soma = 0
+
     def __init__(self,**kwargs):
         super(TelaTotal,self).__init__(**kwargs)
         # eventos = self.ids.text_eventos.text
@@ -951,7 +965,7 @@ class TelaTotal(Screen,Data):
         # Tentando abrir o arquivo Valores.txt para soma se não existir será criado
         try:
             s_v = float(self.ler_valor('Valores.txt'))
-            self.ids.Valor_soma.text = f'{s_v:.1f}'
+            self.ids.Valor_soma.text = f'R$ {s_v:.1f}'
         except FileNotFoundError:
             self.valor('Valores.txt')
         except TypeError:
@@ -963,6 +977,11 @@ class TelaTotal(Screen,Data):
         percentual_sobra = float(self.percentuais() - percentual_main)
         self.ids.label_main.text = f'{self.main_porcentagen} %'
         self.ids.label_sobra.text = f'{100-int(self.main_porcentagen)} %'
+
+        percentual_gasto_main = float((int(self.main_porcentagen) * int(arquiv)) / 100)
+        percentual_gasto_sobra = float(arquiv - percentual_gasto_main)
+
+        self.atualizar_rst()
 
         # Here format the values
         # Aqui formata os valores
@@ -994,6 +1013,36 @@ class TelaTotal(Screen,Data):
         coteiner.add_widget(image)
         coteiner.add_widget(bt_box)
         pop.open()
+
+    def atualizar_rst(self):
+
+        # trying open file gastos.txt  se não existir  a variavel arquiv sera criada com espaço em branco
+        try:
+            arquiv = self.ler_valor('gastos.txt')
+        except FileNotFoundError:
+            arquiv = 0
+
+        # Create and showing thes division ofs percentagen and aditioning in label
+        # Criando e Mostrando as divisões das porcentagen e adicionando no label
+        percentual_main = float(self.percentuais() * int(self.main_porcentagen) / 100)
+        percentual_sobra = float(self.percentuais() - percentual_main)
+        self.ids.label_main.text = f'{self.main_porcentagen} %'
+        self.ids.label_sobra.text = f'{100 - int(self.main_porcentagen)} %'
+
+        percentual_gasto_main = float((int(self.main_porcentagen) * int(arquiv)) / 100)
+        percentual_gasto_sobra = float(arquiv - percentual_gasto_main)
+
+        self.ids.porc_gasto.text = f"""
+.. _Total:
+Porcentagen dos gastos
+==========
+
+                Total_: R$ {arquiv:.1f}
+**[size=30]{self.main_porcentagen}%**   =  {percentual_gasto_main}[/size] 
+
+**[size=30]{100 - int(self.main_porcentagen)}%**  =  {percentual_gasto_sobra}[/size]
+
+"""
 
     def deletar(self,*args):
         texto = self.root_bt.ids.texto.text
@@ -1034,8 +1083,10 @@ class TelaTotal(Screen,Data):
 
             soma = sum(self.lista_gastos)
             self.ids.total_gastos.text = f'Total gastos: {str(float(soma))}'
+
         except ValueError or FileNotFoundError:
             pass
+
 
 class BiforeTotal(BoxLayout):
     def __init__(self,texto='',**kwargs):
@@ -1059,9 +1110,6 @@ class Box_Total(BoxLayout):
         super(Box_Total,self).__init__(**kwargs)
         self.ids.texto.text = label
         self.label = label
-
-from kivy.lang.builder import Builder
-
 
 
 class ControleVerbaApp(App):

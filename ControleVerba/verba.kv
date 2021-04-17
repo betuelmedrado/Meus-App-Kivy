@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 # Controle de Finanças
+#:import SlideTransition kivy.uix.screenmanager.SlideTransition
+
 <Gerenciador>:
+    id:gerenciador
     Menu:
         name:'Menu'
     Adicionar:
@@ -16,99 +19,242 @@
     BoxLayout:
         orientation:'vertical'
         ActionBar:
+            pos_hint:{'top':1}
             ActionView:
                 ActionPrevious:
                     on_release:app.root.current = 'Menu'
         BoxLayout:
-            FloatLayout:
+            orientation:'vertical'
+            BoxLayout:
+                size_hint_y:.6
+                canvas:
+                    Color:
+                        rgba: .12,.25,0,.255
+                    Rectangle:
+                        size:self.width, self.height - 2
+                        pos:self.x,self.y + 8
+                    Color:
+                        rgba:.12,.12,0,1
+                    Rectangle:
+                        size:self.width, 2
+                        pos:self.x, self.y + 2
+
+                Label:
+                    pos_hint:{'x':1,'center_y':.5}
+                    text:'[b][size=17dp]Selêcione o Mês[/size][/b]\n  Para visualizar ou excluir'
+                    bold:True
+                    markup:True
+                Label:
+                    size_hint_x:None
+                    width:'400dp'
                 Spinner:
                     size_hint:None,None
                     width:'100dp'
                     height:'35dp'
-                    pos_hint:{'right':.99,'center_y':.95}
+                    pos_hint:{'center_y':.5}
                     bold:True
                     values:root.spiner
                     id:spiner_month
-
+            BoxLayout:
+                size_hint_y:None
+                height:'40dp'
+                canvas:
+                    Color:
+                        rgba:.16,.16,.16,.252
+                    Rectangle:
+                        size:self.width,self.height - 8
+                        pos:self.x, self.y + 8
+                    Color:
+                        rgba:.12,.12,0,1
+                    Rectangle:
+                        size:self.width,2
+                        pos:self.x,self.y + 2
+            BoxLayout:
+                size_hint_y:.9
+                canvas:
+                    Color:
+                        rgba:.12,.25,0,.255
+                    Rectangle:
+                        size:self.width,self.height - 2
+                        pos:self.x,self.y + 7
+                    Color:
+                        rgba:.12,.12,0,1
+                    Rectangle:
+                        size:self.width,2
+                        pos:self.pos
                 Label:
-                    pos_hint:{'x':.25,'center_y':.95}
-                    text:'Selêcione o Mês =>'
-
+                    text:'[b][size=20dp]Exclua o mês selêcionado[/size][/b]\n  Depois de selecionar o mês acima clik aqui em excluir!'
+                    pos_hint:{'center_y':.7}
+                    font_size:'15'
+                    markup:True
                 Label:
-                    text:'Exclua o mês selêcionado'
-                    pos_hint:{'center_x':.5,'center_y':.85}
-                    font_size:'18'
-
+                    size_hint_x:.6
                 Button:
                     size_hint:None,None
                     width:'100dp'
-                    height:'30dp'
-                    pos_hint:{'center_x':.5,'center_y':.77}
+                    height:'35dp'
+                    pos_hint:{'center_y':.5}
                     text:"Excluir"
-#                    on_release:root.excluir_mes()
+    #                    on_release:root.excluir_mes()
                     on_release:root.popap2()
 
-                Label:
-                    pos_hint:{'x':0,'center_y':.68}
-                    font_size:'20sp'
-                    text:'Limpar o diretorio de arquivos '
+            BoxLayout:
+                size_hint_y:.7
+                canvas:
+                    Color:
+                        rgba:.12,.25,0,.255
+                    Rectangle:
+                        size:self.width,self.height - 8
+                        pos:self.x,self.y + 8
+                    Color:
+                        rgba:.12,.12,0,1
+                    Rectangle:
+                        size:self.width,2
+                        pos:self.x, self.y + 2
 
+                Label:
+                    pos_hint:{'center_y':.6}
+                    font_size:'15sp'
+                    text:'[b][size=25][color=7f0000ff]Limpar o diretorio de arquivos[/color][/size][/b]\n  Se limpar o diretório você estára apagando todos os  "Mêses"  salvos!'
+                    markup:True
+                Label:
+                    size_hint_x:.35
                 Button:
                     size_hint:None,None
                     width:'80dp'
                     height:'30dp'
-                    pos_hint:{'center_x':.5,'center_y':.58}
+                    pos_hint:{'center_y':.5}
                     background_color:1,0,0,1
                     text:'Limpar'
                     on_release:root.popap()
-
-
+            BoxLayout:
+                size_hint_y:None
+                height:'40dp'
+                canvas:
+                    Color:
+                        rgba:.16,.16,.16,.252
+                    Rectangle:
+                        size:self.width,self.height - 8
+                        pos:self.x, self.y + 8
+                    Color:
+                        rgba:.12,.12,0,1
+                    Rectangle:
+                        size:self.width,2
+                        pos:self.x,self.y + 2
                 Label:
-                    pos_hint:{'center_x':.5,'center_y':.5}
+                    text:'% Porcentagen %'
+
+            BoxLayout:
+                size_hint_y:.9
+                canvas:
+                    Color:
+                        rgba:.12,.25,0,.255
+                    Rectangle:
+                        size:self.width, self.height - 8
+                        pos:self.x, self.y + 8
+                    Color:
+                        rgba:.12,.12,0,1
+                    Rectangle:
+                        size:self.width, 2
+                        pos:self.pos
+                Label:
+                    pos_hint:{'center_y':.5}
                     font_size:'15sp'
                     text:'Defina a sua porcentagen a baixo'
                 TextInput:
                     size_hint:None,None
                     width:'40sp'
                     height:'30sp'
-                    pos_hint:{'center_x':.5,'center_y':.4}
+                    pos_hint:{'center_y':.5}
+                    multiline:False
                     id:df_porcentagen
                 Label:
+                    size_hint_x:None
+                    height:'10dp'
                     font_size:'20sp'
-                    pos_hint:{'center_x':.6,'center_y':.4}
+                    pos_hint:{'center_y':.5}
                     text:'%'
                 Label:
-                    pos_hint:{'x':.0,'center_y':.3}
-                    text:'Apos incerir a porcentagen o programa recebe \n altomaticamente o valor!'
+                    canvas:
+                        Color:
+                            rgba:.12,.12,0,.300
+                        Rectangle:
+                            size:self.width, self.height - 8
+                            pos:self.x, self.y + 8
+                        Color:
+                            rgba:.12,.12,0,1
+                        Rectangle:
+                            size:self.width, 2
+                            pos:self.pos
+                    size_hint_x:1 + .2
+                    markup:True
+                    text:'Apos inserir a porcentagem o progrâma recebe \n automaticamente o valor!'
                     id:mensagen_setting
-#
+            BoxLayout:
+                size_hint_y:.6
+                canvas:
+                    Color:
+                        rgba:.12,.12,0,.255
+                    Rectangle:
+                        size:self.width, self.height - 8
+                        pos:self.x, self.y + 8
+                    Color:
+                        rgba:1,1,1,.2
+                    Rectangle:
+                        size:self.width, 2
+                        pos:self.pos
                 Label:
-                    text:'Fechamento do Mês!'
-                    pos_hint:{'center_x':.5,'center_y':.2}
-                BoxLayout:
-                    size_hint_y:None
-                    height:'30dp'
-                    pos_hint:{'center_x':.5,'center_y':.1}
-                    Label:
-                        text:'Dia'
-                    TextInput:
-                        size_hint_x:None
-                        width:'40sp'
-                        id:fechamento1
-                    Label:
-                        text:'Até'
-                    TextInput:
-                        size_hint_x:None
-                        width:'40sp'
-                        id:fechamento2
-                    Label:
+                    text:'[b][size=17dp]Fechamento do Mês![/size][/b]\n Exemplo:  dia 05 até 20,  se não for encerido nenhum vâlor o mês abre dia 1° '
+                    markup:True
+#                    pos_hint:{'center_y':.2}
+                Label:
+                    size_hint_x:None
+                    width:'220dp'
+
+            BoxLayout:
+                size_hint_y:None
+                height:'100dp'
+    #            pos_hint:{'center_x':.5,'center_y':.1}
+                canvas:
+                    Color:
+                        rgba:.12,.25,0,.255
+                    Rectangle:
+                        size:self.size
+                        pos:self.pos
+                Label:
+                    text:'Dia'
+                TextInput:
+                    size_hint:None,None
+                    width:'40sp'
+                    height:'30sp'
+                    pos_hint:{'center_y':.5}
+                    multiline:False
+                    id:fechamento1
+
+
+                Label:
+                    text:'Até'
+                TextInput:
+                    size_hint:None,None
+                    width:'40sp'
+                    height:'30sp'
+                    pos_hint:{'center_y':.5}
+                    multiline:False
+                    id:fechamento2
+                Label:
 <Menu>:
+    Image:
+        size_hint_x:1 + 1
+        pos_hint:{'center_x':.5}
+        allow_stretch:True
+        source:'image/textura.png'
     BoxLayout:
         BoxLayout:
             FloatLayout:
                 Label:
+                    size_hint_x:.1
                     pos_hint:{'center_x':.85,'center_y':.9}
-                    font_size:'30sp'
+                    font_size:self.width
                     bold:True
                     color:0,1,1,1
                     text:'Controle Financeiro'
@@ -119,23 +265,26 @@
                 #                disabled_outline_color:True
 
                 BoxLayout:
-                    size_hint_y:.15
+                    size_hint:.15,.15
                     pos_hint:{'center_x':.5,'center_y':.7}
-                    Image:
-                        allow_stretch:True
-                        source:'image/telaAdd.png'
+                    canvas:
+                        Ellipse:
+                            pos:self.pos
+                            source:'image/telaAdd.png'
                 BoxLayout:
-                    size_hint_y:.12
+                    size_hint:.15,.15
                     pos_hint:{'center_x':.5,'center_y':.49}
-                    Image:
-                        allow_stretch:True
-                        source:'image/minhaTela.png'
+                    canvas:
+                        Ellipse:
+                            pos:self.pos
+                            source:'image/minhaTela.png'
                 BoxLayout:
-                    size_hint_y:.15
+                    size_hint:.15,.15
                     pos_hint:{'center_x':.53,'center_y':.28}
-                    Image:
-                        allow_stretch:True
-                        source:'image/dividir2.png'
+                    canvas:
+                        Ellipse:
+                            pos:self.pos
+                            source:'image/dividir2.png'
 
             BoxLayout:
                 orientation:'vertical'
@@ -145,8 +294,8 @@
                 pos_hint:{'center_y':.42}
                 FloatLayout:
                     Botaos:
-                        size_hint_y:None
-                        height:'40dp'
+                        size_hint_y:.15
+#                        height:'40dp'
                         font_size:'30sp'
                         text:'Adicionar'
                         outline_width:3
@@ -158,8 +307,8 @@
 #                        size_hint_y:None
 #                        height:'25dp'
                     Botaos:
-                        size_hint_y:None
-                        height:'40dp'
+                        size_hint_y:.15
+#                        height:'40dp'
                         font_size:sp('30')
                         bold:True
                         text:'Visualizar'
@@ -171,8 +320,8 @@
 #                        size_hint_y:None
 #                        height:'25dp'
                     Botaos:
-                        size_hint_y:None
-                        height:'40dp'
+                        size_hint_y:.15
+#                        height:'40dp'
                         font_size:sp('30')
                         bold:True
                         text:'Total'
@@ -205,7 +354,7 @@
 <CorAdicionar@Label>:
     canvas.before:
         Color:
-            rgba:.1,192,1,1
+            rgba:.35,.35,.35,.255
 #            rgba:.5,.5,.5,1
         Rectangle:
             size:self.size
@@ -243,24 +392,41 @@
 
         BoxLayout:
             orientation:'vertical'
+            canvas:
+                Color:
+                    rgba:0,.31,.51,1
+                Rectangle:
+                    size:self.width - 20, self.height - 55
+                    pos:self.x + 10, self.y - 10
+                Color:
+#                    rgba:0,.31,.51,1
+                    rgba:0,0,0,1
+                Rectangle:
+                    size:self.width - 20, 3
+                    pos:self.x + 10,self.y - 20
+
             BoxLayout:
                 size_hint_y:None
                 height:'60dp'
                 canvas:
                     Color:
-                        rgba:0,0,1,1
+                        rgba:.35,.35,.35,.655
                     Rectangle:
-                        size:self.width,self.height
-                        pos:self.pos
+                        size:self.width,self.height - 8
+                        pos:self.x, self.y + 7
+                    Color:
+                        rgba:0,0,0,1
+                    Rectangle:
+                        size:self.width - 20, 2
+                        pos:self.x + 10, self.y
                 Label:
                     font_size:'25sp'
-                    color:0,0,0,1
+                    color:1,0,0,1
                     bold:True
                     underline:True
-                    outline_width:2
-                    outline_color:1,1,1,1
+                    outline_width:3
+                    outline_color:0,0,0,1
                     text:'Cerviços'
-                    id:lb_title
             BoxLayout:
 
             BoxLayout:
@@ -269,7 +435,6 @@
                 Label:
                     size_hint_x:None
                     width:'100sp'
-                    pos_hint:{'x':.15}
                     text:'Modelo'
                     color: 0.5,0.9,0.7,1
                     font_size:'20sp'
@@ -277,9 +442,10 @@
                     outline_width:2
                     id:modelo
                 TextInput:
-                    size_hint:3,None
+                    size_hint:8,None
                     height:'30sp'
                     pos_hint:{'center_x':.5}
+                    multiline:False
                     id:text_modelo
 
                 Label:
@@ -290,7 +456,6 @@
                 Label:
                     size_hint_x:None
                     width:'100sp'
-                    pos_hint:{'x':.15}
                     text:'Local'
                     color: 0.5,0.9,0.7,1
                     font_size:sp('20')
@@ -298,9 +463,10 @@
                     outline_width:2
                     id:local
                 TextInput:
-                    size_hint:3,None
+                    size_hint:8,None
                     height:'30sp'
                     pos_hint:{'center_x':.5}
+                    multiline:False
                     id:text_local
                 Label:
 
@@ -328,79 +494,112 @@
                     size_hint:.3,None
                     height:'30sp'
                     pos_hint:{'center_x':.5}
+                    multiline:False
                     id:text_valor
                 Label:
             BoxLayout:
                 Label:
                     color:0,0,0,1
                     text:'Adicione a cima o modelo do carro/moto, \nlocal e valor'
+                    multiline:True
                     id:mensagen_add
 
     # Aqui adiciona os gastos
-        BoxLayout:
-            orientation:'vertical'
-            spacing:'25sp'
-            Label:
-                text:'Valores gastos'
-                id:valor_gastos
-                font_size:'25sp'
-                color: 1,0,0,1
-                outline_width:3
-                outline_color:0,0,0,1
-                underline:3
-                pos_hint:{'center_x':.5,'center_y':1}
+        FloatLayout:
             BoxLayout:
-                size_hint_y:None
-                height:'20dp'
+                pos_hint:{'center_y':.5}
+                orientation:'vertical'
+                spacing:'25sp'
+                canvas:
+                    Color:
+                        rgba:0,.31,.51,1
+                    Rectangle:
+                        size:self.width - 20, self.height - 45
+                        pos:self.x + 10, self.y - 10
+                    Color:
+    #                    rgba:0,.31,.51,1
+                        rgba:0,0,0,1
+                    Rectangle:
+                        size:self.width - 20, 3
+                        pos:self.x + 10,self.y - 20
+                    Color:
+                        rgba:0,0,0,1
+                    Rectangle:
+                        size:self.width - 20,3
+                        pos:self.x + 10, self.top - 50
                 Label:
-                    size_hint_x:None
-                    width:'100sp'
-                    pos_hint:{'center_x':.15,'center_y':.8}
-                    text:'Eventos'
+                    text:'Valores gastos'
+                    id:valor_gastos
+                    font_size:'25sp'
                     color: 1,0,0,1
-                    font_size:sp('20')
-                    outline_width:2
+                    outline_width:3
                     outline_color:0,0,0,1
-                    bold:True
-                TextInput:
-                    size_hint:3,None #dp.2,.05
-                    height:'30sp'
-                    pos_hint:{'center_x':.5,'center_y':.8}
-                    id:text_eventos
-                Label:
+                    underline:3
+                    pos_hint:{'center_x':.5,'center_y':1}
 
-            BoxLayout:
-                size_hint_y:None
-                height:'20dp'
-                Label:
-                    size_hint_x:None
-                    width:'100sp'
-                    text:'Gastos'
-                    pos_hint:{'center_x':.5,'center_y':.8}
-                    color: 1,0,0,1
-                    font_size:sp('20')
-                    outline_width:2
-                    outline_color:0,0,0,1
-                    bold:True
-                Label:
-                    size_hint_x:None
-                    width:dp('20')
-                    color: 1,0,0,1
-                    text:'R$'
-                    outline_width:2
-                    outline_color:0,0,0,1
-                    pos_hint:{'center_x':.2,'center_y':.8}
-                TextInput:
-                    size_hint:.3,None
-                    height:'30dp'
-                    pos_hint:{'center_x':.5,'center_y':.8}
-                    id:text_gastos
-                Label:
-            BoxLayout:
-                Label:
-                    color:0,0,0,1
-                    text:'Adicione os gastos com eventos ocorridos e valores'
-                    id:mensagen_gastos
+                BoxLayout:
+                    size_hint_y:None
+                    height:'20dp'
+                    Label:
+                        size_hint_x:None
+                        width:'100sp'
+                        pos_hint:{'center_x':.15,'center_y':.8}
+                        text:'Eventos'
+                        color: 1,0,0,1
+                        font_size:sp('20')
+                        outline_width:2
+                        outline_color:0,0,0,1
+                        bold:True
+                    TextInput:
+                        size_hint:8,None #dp.2,.05
+                        height:'30sp'
+                        pos_hint:{'center_x':.5,'center_y':.8}
+                        multiline:False
+                        id:text_eventos
+                    Label:
+
+                BoxLayout:
+                    size_hint_y:None
+                    height:'20dp'
+                    Label:
+                        size_hint_x:None
+                        width:'100sp'
+                        text:'Gastos'
+                        pos_hint:{'center_x':.5,'center_y':.8}
+                        color: 1,0,0,1
+                        font_size:sp('20')
+                        outline_width:2
+                        outline_color:0,0,0,1
+                        bold:True
+                    Label:
+                        size_hint_x:None
+                        width:dp('20')
+                        color: 1,0,0,1
+                        text:'R$'
+                        outline_width:2
+                        outline_color:0,0,0,1
+                        pos_hint:{'center_x':.2,'center_y':.8}
+                    TextInput:
+                        size_hint:.3,None
+                        height:'30dp'
+                        pos_hint:{'center_x':.5,'center_y':.8}
+                        multiline:False
+                        id:text_gastos
+                    Label:
+                BoxLayout:
+                    Label:
+                        color:0,0,0,1
+                        text:'Adicione os gastos com eventos ocorridos e\n valores. '
+                        multiline:True
+                        markup:True
+                        id:mensagen_gastos
+            FloatLayout:
+                size_hint:.1,.2
+                canvas:
+                    Rectangle:
+                        size:self.size
+                        pos:20,55
+                        source:'image/conserto.png'
 
         BoxLayout:
             size_hint_y:None
@@ -446,8 +645,9 @@
     # class da cor de fundo
     canvas.before:
         Color:
-            rgba:.2,.4,.5,.5
+            rgba:.35,.35,.35,.255
         Rectangle:
+            source:'image/papel.png'
             size:self.size
             pos:self.pos
 
@@ -468,6 +668,12 @@
             orientation:'vertical'
             size_hint_y:None
             height:sp('60')
+            canvas:
+                Color:
+                    rgba:0,0,0,1
+                Rectangle:
+                    size:self.width,5
+                    pos:self.pos
             Label:
                 #Label: Data, Modelo, Local, Valor
                 size_hint_x:.03
@@ -505,9 +711,17 @@
         orientation:'vertical'
         size_hint_y:None
         height: sp('50')
-        CorFund:
-            size_hint_y:None
-            height:'5sp'
+        canvas:
+            Color:
+                rgba:.2,.4,.5,.5
+            Rectangle:
+                size:self.width - 8, self.height - 8
+                pos:self.x + 6,self.y + 8
+            Color:
+                rgba:0,0,0,1
+            Rectangle:
+                size:self.width,3
+                pos:self.pos
         Label:
             size_hint_x:.03
             font_size:self.width
@@ -535,9 +749,17 @@
         orientation:'vertical'
         size_hint_y:None
         height: sp('50')
-        CorFund:
-            size_hint_y:None
-            height:'5sp'
+        canvas:
+            Color:
+                rgba:.2,.4,.5,.5
+            Rectangle:
+                size:self.width, self.height - 8
+                pos:self.x, self.y + 8
+            Color:
+                rgba:0,0,0,1
+            Rectangle:
+                size:self.width, 3
+                pos:self.pos
         Label:
             size_hint_x:.03
             font_size:'15sp'
@@ -588,12 +810,44 @@
                 Label:
                     pos_hint:{'x':.0,'center_y':.99}
                     font_size:'20sp'
-                    id: Valor_soma
-                Label:
-                    pos_hint:{'center_x':.5,'center_y':.8}
-                    font_size:'20sp'
                     underline:True
-                    text:'--------> Divisao <--------'
+                    id: Valor_soma
+                BoxLayout:
+                    size_hint_y:.01
+                    pos_hint:{'center_x':.5,'center_y':.88}
+                    canvas:
+                        Color:
+                            rgba:.35,.35,.35,.255
+                        Rectangle:
+                            size:self.width, self.height - 8
+                            pos:self.x,self.y + 5
+                        Color:
+                            rgba:.34,.34,.34,.555
+                        Rectangle:
+                            size:self.width,2
+                            pos:self.pos
+                BoxLayout:
+                    size_hint_y:.15
+                    pos_hint:{'center_x':.5,'center_y':.8}
+                    canvas:
+                        Color:
+                            rgba:.35,.35,.35,.255
+                        Rectangle:
+                            size:self.width, self.height - 8
+                            pos:self.x,self.y + 5
+                        Color:
+                            rgba:.34,.34,.34,.555
+                        Rectangle:
+                            size:self.width,2
+                            pos:self.pos
+                    Label:
+#                        pos_hint:{'center_x':.5,'center_y':.8}
+                        font_size:'20sp'
+                        underline:True
+                        outline_width:3
+                        outline_color:0,0,0,1
+                        bold:True
+                        text:'--------> Divisão <--------'
 
                 Label:
                     size_hint_x:None
@@ -601,6 +855,7 @@
                     pos_hint:{'right':.43,'center_y':.6}
                     font_size:'25sp'
                     bold:True
+                    color:1,0,0,1
 #                    text:'60% :'
                     id:label_main
                 Label:
@@ -614,47 +869,108 @@
                     pos_hint:{'right':.43,'center_y':.4}
                     font_size:'25sp'
                     bold:True
+                    color:1,0,0,1
 #                    text:'40% : '
                     id:label_sobra
                 Label:
                     font_size:'15sp'
                     pos_hint:{'x':.00,'center_y':.4}
                     id:valor_sobra
-
-                Label:
-                    pos_hint:{'center_x':.5,'center_y':.1}
-                    font_size: '25sp'
-                    underline:True
-                    outline_width:11
-                    color:0,0,1,1
-                    text:'--------> Gastos <---------'
-
-            BoxLayout:
-                orientation:'vertical'
-                canvas:
-                    Color:
-                        rgba:0,0,.4,1
-                    Rectangle:
-                        size:self.width,self.height
-                        pos:self.pos
-                ScrollView
-                    orientation:'vertical'
-                    BoxLayout:
-                        orientation:'vertical'
-                        size_hint_y:None
-                        height: self.minimum_height
-                        id:gastos
-
                 BoxLayout:
-                    size_hint_y:None
-                    height:'30sp'
+                    size_hint_y:.01
+                    pos_hint:{'center_x':.5,'center_y':.28}
                     canvas:
                         Color:
-                            rgba:0,0,0,.5
+                            rgba:.35,.35,.35,.255
                         Rectangle:
-                            pos:self.x,self.y
-                            size:self.width, self.height
+                            size:self.width, self.height - 8
+                            pos:self.x,self.y + 5
+                        Color:
+                            rgba:.34,.34,.34,.555
+                        Rectangle:
+                            size:self.width,2
+                            pos:self.pos
 
+                BoxLayout:
+                    size_hint_y:.25
+                    pos_hint:{'center_x':.5,'center_y':.15}
+                    canvas:
+                        Color:
+                            rgba:.35,.35,.35,.255
+                        Rectangle:
+                            size:self.width, self.height - 8
+                            pos:self.x,self.y + 5
+                        Color:
+                            rgba:.34,.34,.34,.555
+                        Rectangle:
+                            size:self.width,2
+                            pos:self.pos
                     Label:
-                        font_size:'20sp'
-                        id:total_gastos
+                        pos_hint:{'center_x':.5,'center_y':.5}
+                        outline_width:2
+                        color:0,0,1,1
+                        bold:True
+                        markup:True
+                        text:'[b][size=25dp][u]             --------> Gastos <---------             [/u][/size][/b]\n[color=ffffff][size=13]                 Os gastos não estão somados na porcentagem da divisão[/size][/color]'
+            Carousel:
+                id:carrocel
+                BoxLayout:
+                    orientation:'vertical'
+                    canvas:
+#                        Color:
+#                            rgba:0,0,.4,.1
+                        Rectangle:
+                            size:self.width,self.height
+                            pos:self.pos
+                            source:'image/textura.png'
+
+                    ScrollView
+                        orientation:'vertical'
+                        BoxLayout:
+                            orientation:'vertical'
+                            size_hint_y:None
+                            height: self.minimum_height
+                            id:gastos
+
+                    BoxLayout:
+                        size_hint_y:None
+                        height:'30sp'
+                        canvas:
+                            Color:
+                                rgba:0,0,0,.5
+                            Rectangle:
+                                pos:self.x,self.y
+                                size:self.width, self.height
+
+                        Label:
+                            font_size:'20sp'
+                            id:total_gastos
+
+                        Button:
+                            size_hint_x:.16
+                            bold:True
+                            color:1,0,0,.7
+                            font_size:'40dp'
+                            outline_width:2
+                            outline_color:0,0,0,1
+                            text:'>'
+                            on_release:carrocel.load_next() , root.atualizar_rst()
+                BoxLayout:
+                    orientation:'vertical'
+                    RstDocument:
+#                        background_color:0,0,1,.7
+                        id:porc_gasto
+                    BoxLayout:
+                        size_hint_y:None
+                        height:'30dp'
+                        Button:
+                            size_hint_x:None
+                            width:'50dp'
+                            color:1,0,0,.7
+                            font_size:'40dp'
+                            outline_width:2
+                            outline_color:0,0,0,1
+                            text:'<'
+                            on_release:carrocel.load_previous()
+
+
