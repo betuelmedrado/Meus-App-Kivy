@@ -40,19 +40,20 @@
                         pos:self.x, self.y + 2
 
                 Label:
-                    pos_hint:{'x':1,'center_y':.5}
-                    text:'[b][size=17dp]Selêcione o Mês[/size][/b]\n  Para visualizar ou excluir'
+                    pos_hint:{'x':.6,'center_y':.5}
+                    text:'[b][size=17dp][color=e8ff4cff]Selêcione o Mês[/color][/size][/b]\n  Para visualizar ou excluir'
                     bold:True
                     markup:True
                 Label:
                     size_hint_x:None
-                    width:'400dp'
+                    width:'40dp'
                 Spinner:
                     size_hint:None,None
                     width:'100dp'
                     height:'35dp'
                     pos_hint:{'center_y':.5}
                     bold:True
+                    color:255, 215, 0, 1
                     values:root.spiner
                     id:spiner_month
             BoxLayout:
@@ -70,6 +71,7 @@
                         size:self.width,2
                         pos:self.x,self.y + 2
             BoxLayout:
+                orientation:'vertical'
                 size_hint_y:.9
                 canvas:
                     Color:
@@ -83,23 +85,26 @@
                         size:self.width,2
                         pos:self.pos
                 Label:
-                    text:'[b][size=20dp]Exclua o mês selêcionado[/size][/b]\n  Depois de selecionar o mês acima clik aqui em excluir!'
-                    pos_hint:{'center_y':.7}
-                    font_size:'15'
+                    text:'      [b][size=20dp][color=e8ff4cff]Exclua o mês selêcionado[/color][/size][/b]\n  Depois de selecionar o mês acima clik aqui em excluir!'
+#                    pos_hint:{'center_y':.7}
                     markup:True
-                Label:
-                    size_hint_x:.6
                 Button:
                     size_hint:None,None
                     width:'100dp'
                     height:'35dp'
-                    pos_hint:{'center_y':.5}
+                    pos_hint:{'center_x':.5}
                     text:"Excluir"
+                    bold:True
+                    color:255, 215, 0, 1
     #                    on_release:root.excluir_mes()
                     on_release:root.popap2()
+                Label:
+                    size_hint_y:None
+                    height:'10dp'
 
             BoxLayout:
-                size_hint_y:.7
+                orientation:'vertical'
+
                 canvas:
                     Color:
                         rgba:.12,.25,0,.255
@@ -111,22 +116,22 @@
                     Rectangle:
                         size:self.width,2
                         pos:self.x, self.y + 2
-
                 Label:
-                    pos_hint:{'center_y':.6}
-                    font_size:'15sp'
-                    text:'[b][size=25][color=7f0000ff]Limpar o diretorio de arquivos[/color][/size][/b]\n  Se limpar o diretório você estára apagando todos os  "Mêses"  salvos!'
+                    font_size:15
+                    text:'[b][size=25][color=7f0000ff]Limpar o diretorio de arquivos[/color][/size][/b]\n  Se limpar o diretório você estára\n  apagando todos os  "Mêses"  salvos!'
                     markup:True
-                Label:
-                    size_hint_x:.35
                 Button:
                     size_hint:None,None
                     width:'80dp'
                     height:'30dp'
-                    pos_hint:{'center_y':.5}
+                    pos_hint:{'center_x':.5}
                     background_color:1,0,0,1
+                    color:1,1,1,1
                     text:'Limpar'
                     on_release:root.popap()
+                Label:
+                    size_hint_y:None
+                    height:'10dp'
             BoxLayout:
                 size_hint_y:None
                 height:'40dp'
@@ -142,9 +147,11 @@
                         size:self.width,2
                         pos:self.x,self.y + 2
                 Label:
-                    text:'% Porcentagen %'
+                    text:'% [color=e8ff4cff]Porcentagen[/color] %'
+                    markup:True
 
             BoxLayout:
+                orientation:'vertical'
                 size_hint_y:.9
                 canvas:
                     Color:
@@ -158,22 +165,25 @@
                         size:self.width, 2
                         pos:self.pos
                 Label:
-                    pos_hint:{'center_y':.5}
+#                    pos_hint:{'center_y':.5}
                     font_size:'15sp'
                     text:'Defina a sua porcentagen a baixo'
-                TextInput:
-                    size_hint:None,None
-                    width:'40sp'
-                    height:'30sp'
-                    pos_hint:{'center_y':.5}
-                    multiline:False
-                    id:df_porcentagen
-                Label:
+                BoxLayout:
                     size_hint_x:None
-                    height:'10dp'
-                    font_size:'20sp'
-                    pos_hint:{'center_y':.5}
-                    text:'%'
+                    width:'80dp'
+                    pos_hint:{'center_x':.5}
+                    TextInput:
+                        size_hint:None,None
+                        width:'40sp'
+                        height:'30sp'
+                        multiline:False
+                        id:df_porcentagen
+                    Label:
+                        size_hint_x:None
+                        width:'20dp'
+                        font_size:'20sp'
+                        pos_hint:{'center_x':.01}
+                        text:'%'
                 Label:
                     canvas:
                         Color:
@@ -185,11 +195,14 @@
                             rgba:.12,.12,0,1
                         Rectangle:
                             size:self.width, 2
-                            pos:self.pos
-                    size_hint_x:1 + .2
+                            pos:self.x,self.height
+#                    size_hint_x:1 + .2
                     markup:True
-                    text:'Apos inserir a porcentagem o progrâma recebe \n automaticamente o valor!'
+                    text:'Apos inserir a porcentagem o progrâma\n recebe automaticamente o valor!'
                     id:mensagen_setting
+                Label:
+                    size_hint_y:None
+                    height:'10dp'
             BoxLayout:
                 size_hint_y:.6
                 canvas:
@@ -204,16 +217,12 @@
                         size:self.width, 2
                         pos:self.pos
                 Label:
-                    text:'[b][size=17dp]Fechamento do Mês![/size][/b]\n Exemplo:  dia 05 até 20,  se não for encerido nenhum vâlor o mês abre dia 1° '
+                    text:'                          [b][size=20dp][color=e8ff4cff][u]Fechamento do Mês![/u][/color][/size][/b]\n    Exemplo:  dia 05 até 20,\n    se não for encerido nenhum vâlor o mês abre dia 1° '
                     markup:True
 #                    pos_hint:{'center_y':.2}
-                Label:
-                    size_hint_x:None
-                    width:'220dp'
 
             BoxLayout:
-                size_hint_y:None
-                height:'100dp'
+                size_hint_y:.400
     #            pos_hint:{'center_x':.5,'center_y':.1}
                 canvas:
                     Color:
@@ -243,16 +252,18 @@
                     id:fechamento2
                 Label:
 <Menu>:
-    Image:
-        size_hint_x:1 + 1
-        pos_hint:{'center_x':.5}
-        allow_stretch:True
-        source:'image/textura.png'
+    canvas:
+        Rectangle:
+            size:self.size
+            source:'image/textura.png'
+#        size_hint_x:1 + 1
+#        pos_hint:{'center_x':.5}
+#        allow_stretch:True
     BoxLayout:
         BoxLayout:
             FloatLayout:
                 Label:
-                    size_hint_x:.1
+                    size_hint_x:.15
                     pos_hint:{'center_x':.85,'center_y':.9}
                     font_size:self.width
                     bold:True
@@ -265,24 +276,30 @@
                 #                disabled_outline_color:True
 
                 BoxLayout:
-                    size_hint:.15,.15
-                    pos_hint:{'center_x':.5,'center_y':.7}
+                    size_hint:None,.15
+                    width:'100dp'
+                    pos_hint:{'center_x':.6,'center_y':.7}
                     canvas:
                         Ellipse:
                             pos:self.pos
+                            size:self.size
                             source:'image/telaAdd.png'
                 BoxLayout:
-                    size_hint:.15,.15
-                    pos_hint:{'center_x':.5,'center_y':.49}
+                    size_hint:None,.15
+                    width:'100dp'
+                    pos_hint:{'center_x':.6,'center_y':.49}
                     canvas:
                         Ellipse:
+                            size:self.size
                             pos:self.pos
                             source:'image/minhaTela.png'
                 BoxLayout:
-                    size_hint:.15,.15
-                    pos_hint:{'center_x':.53,'center_y':.28}
+                    size_hint:None,.15
+                    width:'100dp'
+                    pos_hint:{'center_x':.6,'center_y':.28}
                     canvas:
                         Ellipse:
+                            size:self.size
                             pos:self.pos
                             source:'image/dividir2.png'
 
@@ -334,7 +351,7 @@
 #                        height:'20dp'
                     Botaos:
                         size_hint:None,None
-                        width:'40dp'
+                        width:'60dp'
                         height:'30dp'
         #                size_hint:.4,.5
                         text:'Sair'
@@ -343,12 +360,6 @@
                         pos_hint:{'center_x':.5}
                         pos_hint:{'center_x':.1,'center_y':.1}
                         on_release:root.confirmar()
-
-#    Label:
-#        pos_hint:{'center_x':.5,'center_y':.55}
-#        color:.2,0,1,1
-#        text:'com'
-#        id:confere
 
 
 <CorAdicionar@Label>:
@@ -361,23 +372,11 @@
             pos:self.pos
 
 <Adicionar>:
-
-    FloatLayout:
-        size_hint:None,None
-        width:root.width
-        height:root.height
-        pos_hint:{'center_x':.5,'center_y':.5}
-#        Image:
-#            size_hint_y:1
-#            source:'image/nuven.png'
-#            allow_stretch:True
-        CorAdicionar:
-
     BoxLayout:
         orientation:'vertical'
         ActionBar:
             size_hint_y:None
-            height:'35dp'
+            height:'40dp'
             ActionView:
                 ActionPrevious:
                     on_release: app.root.current = 'Menu'
@@ -396,23 +395,23 @@
                 Color:
                     rgba:0,.31,.51,1
                 Rectangle:
-                    size:self.width - 20, self.height - 55
+                    size:self.width - 20, self.height - 60
                     pos:self.x + 10, self.y - 10
                 Color:
-#                    rgba:0,.31,.51,1
-                    rgba:0,0,0,1
+                    rgba:0,.31,.51,1
+#                    rgba:0,0,0,1
                 Rectangle:
                     size:self.width - 20, 3
                     pos:self.x + 10,self.y - 20
 
             BoxLayout:
-                size_hint_y:None
-                height:'60dp'
+#                size_hint_y:None
+#                height:'60dp'
                 canvas:
                     Color:
                         rgba:.35,.35,.35,.655
                     Rectangle:
-                        size:self.width,self.height - 8
+                        size:self.width,self.height
                         pos:self.x, self.y + 7
                     Color:
                         rgba:0,0,0,1
@@ -598,7 +597,7 @@
                 canvas:
                     Rectangle:
                         size:self.size
-                        pos:20,55
+                        pos:20,120
                         source:'image/conserto.png'
 
         BoxLayout:

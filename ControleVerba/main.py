@@ -25,7 +25,8 @@ import shutil
 from kivy.clock import Clock
 from datetime import date
 
-# Window.size = 350, 500
+# Window.size = 350, 600
+# v-2.1.1
 
 Window.clearcolor = .1,.1,.1,1
 class Gerenciador(ScreenManager):
@@ -152,7 +153,7 @@ class Setting(Screen):
             self.ids.mensagen_setting.text = 'O diretorio não foi excluido'
         else:
             self.ids.mensagen_setting.text = str('O diretorio foi excluido com sucesso\n Todos arquivos foram apagados!\n   '
-                                                 '                Reinicie o app...')
+                                                 '                [b][color=7f0000ff][size=30]"Reinicie o app"[/size][/color][/b]...')
 
 
     def excluir_mes(self,*args):
@@ -195,7 +196,7 @@ class Setting(Screen):
         box.add_widget(image)
         box.add_widget(box_botao)
 
-        anim_bt_nao = Animation(color=(0,0,0,1))+Animation(color=(1,1,1,1))
+        anim_bt_nao = Animation(color=(0,0,0,1))+Animation(color=(1,0,0,1))
         anim_bt_nao.start(bt_nao)
         anim_bt_nao.repeat = True
 
@@ -978,8 +979,13 @@ class TelaTotal(Screen,Data):
         self.ids.label_main.text = f'{self.main_porcentagen} %'
         self.ids.label_sobra.text = f'{100-int(self.main_porcentagen)} %'
 
-        percentual_gasto_main = float((int(self.main_porcentagen) * int(arquiv)) / 100)
-        percentual_gasto_sobra = float(arquiv - percentual_gasto_main)
+        try:
+            percentual_gasto_main = float((int(self.main_porcentagen) * int(arquiv)) / 100)
+            percentual_gasto_sobra = float(arquiv - percentual_gasto_main)
+        except TypeError:
+            percentual_gasto_main = 0
+            percentual_gasto_sobra = 0
+
 
         self.atualizar_rst()
 
@@ -1019,8 +1025,9 @@ class TelaTotal(Screen,Data):
         # trying open file gastos.txt  se não existir  a variavel arquiv sera criada com espaço em branco
         try:
             arquiv = self.ler_valor('gastos.txt')
-        except FileNotFoundError:
+        except FileNotFoundError or TypeError:
             arquiv = 0
+
 
         # Create and showing thes division ofs percentagen and aditioning in label
         # Criando e Mostrando as divisões das porcentagen e adicionando no label
@@ -1028,6 +1035,9 @@ class TelaTotal(Screen,Data):
         percentual_sobra = float(self.percentuais() - percentual_main)
         self.ids.label_main.text = f'{self.main_porcentagen} %'
         self.ids.label_sobra.text = f'{100 - int(self.main_porcentagen)} %'
+
+        if arquiv == None:
+            arquiv = 0
 
         percentual_gasto_main = float((int(self.main_porcentagen) * int(arquiv)) / 100)
         percentual_gasto_sobra = float(arquiv - percentual_gasto_main)
@@ -1038,9 +1048,9 @@ Porcentagen dos gastos
 ==========
 
                 Total_: R$ {arquiv:.1f}
-**[size=30]{self.main_porcentagen}%**   =  {percentual_gasto_main}[/size] 
+**[size=80]{self.main_porcentagen}%**   =  {percentual_gasto_main}[/size] 
 
-**[size=30]{100 - int(self.main_porcentagen)}%**  =  {percentual_gasto_sobra}[/size]
+**[size=80]{100 - int(self.main_porcentagen)}%**  =  {percentual_gasto_sobra}[/size]
 
 """
 
