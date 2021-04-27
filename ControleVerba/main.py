@@ -26,7 +26,6 @@ from kivy.clock import Clock
 from datetime import date
 
 # Window.size = 350, 600
-# v-2.1.1
 
 Window.clearcolor = .1,.1,.1,1
 class Gerenciador(ScreenManager):
@@ -262,7 +261,6 @@ class Menu(Screen):
             step_spiner = open('step_spiner.txt','w',encoding='utf-8')
             self.step_spiner = step_spiner.write(str(self.lista_month[self.pos_month - 1]))
 
-
             file_fechamento = open('fechamento.txt','w')
             file_porcento = open('porcentagen.txt','w')
             file_porcento.write(str(100))
@@ -338,10 +336,9 @@ class Menu(Screen):
                     lem = len(v)
                 except FileNotFoundError:
                     pass
-
+######################################################
                 try:
                     lem_file_values = open(self.dados_usuario + self.lista_month[self.pos_month - 1] + '/' + 'lem_file_values.txt', 'r')
-                    print(lem_file_values)
                     lem_file_values.read()
                     lem_file_values.close()
                     l = True
