@@ -96,7 +96,14 @@ class Setting(Screen):
             for pasta in lista:
                 self.spiner.append(pasta.title())
 
+    def voltar_adicionar(self,window,key,*args):
+        if key == 27:
+            App.get_running_app().root.current = 'Adicionar'
+        return True
+
     def on_pre_enter(self):
+        Window.bind(on_keyboard=self.voltar_adicionar)
+
         self.ids.spiner_month.text = str(self.step_spiner).title()
 
         file = open("fechamento.txt","r")
@@ -106,6 +113,8 @@ class Setting(Screen):
         self.ids.fechamento2.text = str(file_fechamento2)
 
     def on_pre_leave(self,*args):
+        Window.unbind(on_keyboard=self.voltar_adicionar)
+
         porcentagen = str(self.ids.df_porcentagen.text)
         self.ids.mensagen_setting.text = ''
         if porcentagen != '':
@@ -256,7 +265,7 @@ class Menu(Screen):
 
         except FileNotFoundError:
             # Só pra criar o arquivo spiner_month.txt , month.txt e step_spiner
-            self.file_spiner = open('spiner_month.txt','a',encoding='utf-8')
+            # self.file_spiner = open('spiner_month.txt','a',encoding='utf-8')
             self.file_month = open('month.txt','w', encoding='utf-8')
             step_spiner = open('step_spiner.txt','w',encoding='utf-8')
             self.step_spiner = step_spiner.write(str(self.lista_month[self.pos_month - 1]))
@@ -456,7 +465,7 @@ class Menu(Screen):
         # self.creat_file()
 
         # Adicionando o som do pupap carrega osom na variavel
-        if self.pop_sound == None:                        # ==================== soudloader
+        if self.pop_sound == None:                # ==================== soudloader
             self.pop_sound = SoundLoader.load('poppap.mp3')
 
     def confirmar(self,*args,**kwargs):
@@ -915,7 +924,13 @@ class TelaTotal(Screen,Data):
         self.lista_gastos = []
         self.dados_usuarios = App.get_running_app().user_data_dir + '/'
 
+    def voltar(self,window,key,*args):
+        if key == 27:
+            App.get_running_app().root.current = 'Menu'
+        return True
+
     def on_pre_enter(self):
+        Window.bind(on_keyboard=self.voltar)
 
         open_spiner = open('step_spiner.txt', 'r', encoding='utf-8')
         file_spiner = str(open_spiner.read())
@@ -994,6 +1009,7 @@ class TelaTotal(Screen,Data):
         self.ids.valor_main.text = f'{v_m:.2f}'
 
     def on_pre_leave(self):
+        Window.unbind(on_keyboard = self.voltar)
         self.ids.total_gastos.text = ''
         self.ids.gastos.clear_widgets()
 
@@ -1019,7 +1035,7 @@ class TelaTotal(Screen,Data):
 
     def atualizar_rst(self):
 
-        # trying open file gastos.txt  se não existir  a variavel arquiv sera criada com espaço em branco
+        # trying open file gastos.txt  if not exists the variable the file will be creat with space in white
         try:
             arquiv = self.ler_valor('gastos.txt')
         except FileNotFoundError or TypeError:

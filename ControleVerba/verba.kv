@@ -217,7 +217,7 @@
                         size:self.width, 2
                         pos:self.pos
                 Label:
-                    text:'                          [b][size=20dp][color=e8ff4cff][u]Fechamento do Mês![/u][/color][/size][/b]\n    Exemplo:  dia 05 até 20,\n    se não for encerido nenhum vâlor o mês abre dia 1° '
+                    text:'                          [b][size=20dp][color=e8ff4cff][u]Fechamento do Mês![/u][/color][/size][/b]\n    Exemplo:  dia 05 até 20,\n    se não for inserido nenhum vâlor o mês abre dia 1° '
                     markup:True
 #                    pos_hint:{'center_y':.2}
 
@@ -312,7 +312,6 @@
                 FloatLayout:
                     Botaos:
                         size_hint_y:.15
-#                        height:'40dp'
                         font_size:'30sp'
                         text:'Adicionar'
                         outline_width:3
@@ -325,7 +324,6 @@
 #                        height:'25dp'
                     Botaos:
                         size_hint_y:.15
-#                        height:'40dp'
                         font_size:sp('30')
                         bold:True
                         text:'Visualizar'
@@ -338,7 +336,6 @@
 #                        height:'25dp'
                     Botaos:
                         size_hint_y:.15
-#                        height:'40dp'
                         font_size:sp('30')
                         bold:True
                         text:'Total'
@@ -353,7 +350,6 @@
                         size_hint:None,None
                         width:'60dp'
                         height:'30dp'
-        #                size_hint:.4,.5
                         text:'Sair'
                         outline_width:3
                         outline_color:0,0,0
@@ -660,7 +656,6 @@
             ActionView:
                 ActionPrevious:
                     on_release: app.root.current = 'Menu'
-                ActionButton:
 
         BoxLayout:
             padding:10
