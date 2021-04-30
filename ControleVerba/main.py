@@ -25,6 +25,8 @@ import shutil
 from kivy.clock import Clock
 from datetime import date
 
+# exclui um argumento ids
+
 # Window.size = 350, 600
 
 Window.clearcolor = .1,.1,.1,1
@@ -716,7 +718,7 @@ class Adicionar(Screen,Data):
 
     def retorna_mesagens(self,*args):
         self.ids.mensagen_gastos.text = 'Adicione os gastos com eventos ocorridos e\n valores.'
-        self.ids.mensagen_add.text = 'Adicione a cima o modelo do carro/moto, \nlocal e valor'
+        self.ids.mensagen_add.text = 'Adicione a cima o modelo do carro/moto,\n local e valor'
 
     def voltar(self,window,key,*args):
         if key == 27:
@@ -919,7 +921,6 @@ class TelaTotal(Screen,Data):
 
     def __init__(self,**kwargs):
         super(TelaTotal,self).__init__(**kwargs)
-        # eventos = self.ids.text_eventos.text
         self.lista_eventos = []
         self.lista_gastos = []
         self.dados_usuarios = App.get_running_app().user_data_dir + '/'
@@ -1081,7 +1082,7 @@ Porcentagen dos gastos
             for eventos in ler_eventos:
                 self.lista_eventos.append(eventos)
 
-            # geting the position file
+            # geting the position of file
             pos_eventos = self.lista_eventos.index(texto)
 
             # deletando o valor na posição do evento
