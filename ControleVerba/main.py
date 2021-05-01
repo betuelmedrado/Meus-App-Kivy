@@ -25,7 +25,7 @@ import shutil
 from kivy.clock import Clock
 from datetime import date
 
-# exclui um argumento ids
+# internal commit: position and  error
 
 # Window.size = 350, 600
 
@@ -918,7 +918,7 @@ class Visualizar(Screen,Data):
 
 class TelaTotal(Screen,Data):
     soma = 0
-
+    arquiv = 0
     def __init__(self,**kwargs):
         super(TelaTotal,self).__init__(**kwargs)
         self.lista_eventos = []
@@ -952,9 +952,9 @@ class TelaTotal(Screen,Data):
 
         # trying open file gastos.txt  se não existir  a variavel arquiv sera criada com espaço em branco
         try:
-            arquiv = self.ler_valor('gastos.txt')
+            self.arquiv = self.ler_valor('gastos.txt')
         except FileNotFoundError:
-            arquiv = 0
+            self.arquiv = 0
 
         # Opening file arq_eventos.txt to read the amount of events
         # abrindo arquivo arq_eventos.txt para ler a quantidades de eventos
@@ -971,7 +971,7 @@ class TelaTotal(Screen,Data):
 
         try:
             # Passando a variavel do arquiv com self.ler_valor('gastos.txt') para somas
-            self.ids.total_gastos.text = str(f'Total gastos: {float(arquiv)}')
+            self.ids.total_gastos.text = str(f'Total gastos: {float(self.arquiv)}')
         except TypeError:
             pass
 
@@ -993,8 +993,8 @@ class TelaTotal(Screen,Data):
         self.ids.label_sobra.text = f'{100-int(self.main_porcentagen)} %'
 
         try:
-            percentual_gasto_main = float((int(self.main_porcentagen) * int(arquiv)) / 100)
-            percentual_gasto_sobra = float(arquiv - percentual_gasto_main)
+            percentual_gasto_main = float((int(self.main_porcentagen) * int(self.arquiv)) / 100)
+            percentual_gasto_sobra = float(self.arquiv - percentual_gasto_main)
         except TypeError:
             percentual_gasto_main = 0
             percentual_gasto_sobra = 0

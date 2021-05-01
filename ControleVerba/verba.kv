@@ -34,7 +34,7 @@
                         size:self.width, self.height - 2
                         pos:self.x,self.y + 8
                     Color:
-                        rgba:.12,.12,0,1
+                        rgba:1,1,1,.4
                     Rectangle:
                         size:self.width, 2
                         pos:self.x, self.y + 2
@@ -66,7 +66,7 @@
                         size:self.width,self.height - 8
                         pos:self.x, self.y + 8
                     Color:
-                        rgba:.12,.12,0,1
+                        rgba:1,1,1,.4
                     Rectangle:
                         size:self.width,2
                         pos:self.x,self.y + 2
@@ -80,13 +80,12 @@
                         size:self.width,self.height - 2
                         pos:self.x,self.y + 7
                     Color:
-                        rgba:.12,.12,0,1
+                        rgba:1,1,1,.4
                     Rectangle:
                         size:self.width,2
                         pos:self.pos
                 Label:
                     text:'      [b][size=20dp][color=e8ff4cff]Exclua o mês selêcionado[/color][/size][/b]\n  Depois de selecionar o mês acima clik aqui em excluir!'
-#                    pos_hint:{'center_y':.7}
                     markup:True
                 Button:
                     size_hint:None,None
@@ -101,6 +100,9 @@
                 Label:
                     size_hint_y:None
                     height:'10dp'
+            Label:
+                size_hint_y:None
+                height:'10dp'
 
             BoxLayout:
                 orientation:'vertical'
@@ -112,12 +114,11 @@
                         size:self.width,self.height - 8
                         pos:self.x,self.y + 8
                     Color:
-                        rgba:.12,.12,0,1
+                        rgba:1,1,1,.4
                     Rectangle:
                         size:self.width,2
                         pos:self.x, self.y + 2
                 Label:
-                    font_size:15
                     text:'[b][size=25][color=7f0000ff]Limpar o diretorio de arquivos[/color][/size][/b]\n  Se limpar o diretório você estára\n  apagando todos os  "Mêses"  salvos!'
                     markup:True
                 Button:
@@ -142,7 +143,7 @@
                         size:self.width,self.height - 8
                         pos:self.x, self.y + 8
                     Color:
-                        rgba:.12,.12,0,1
+                        rgba:1,1,1,.4
                     Rectangle:
                         size:self.width,2
                         pos:self.x,self.y + 2
@@ -160,7 +161,7 @@
                         size:self.width, self.height - 8
                         pos:self.x, self.y + 8
                     Color:
-                        rgba:.12,.12,0,1
+                        rgba:1,1,1,.4
                     Rectangle:
                         size:self.width, 2
                         pos:self.pos
@@ -191,11 +192,11 @@
                         Rectangle:
                             size:self.width, self.height - 8
                             pos:self.x, self.y + 8
-                        Color:
-                            rgba:.12,.12,0,1
-                        Rectangle:
-                            size:self.width, 2
-                            pos:self.x,self.height
+#                        Color:
+#                            rgba:1,1,1,.4
+#                        Rectangle:
+#                            size:self.width, 2
+#                            pos:self.x,self.height
 #                    size_hint_x:1 + .2
                     markup:True
                     text:'Apos inserir a porcentagem o progrâma\n recebe automaticamente o valor!'
@@ -212,7 +213,7 @@
                         size:self.width, self.height - 8
                         pos:self.x, self.y + 8
                     Color:
-                        rgba:1,1,1,.2
+                        rgba:1,1,1,.4
                     Rectangle:
                         size:self.width, 2
                         pos:self.pos
@@ -852,9 +853,10 @@
                     color:1,0,0,1
 #                    text:'60% :'
                     id:label_main
+
                 Label:
                     font_size: '15sp'
-                    pos_hint:{'x':.00,'center_y':.6}
+                    pos_hint:{'x':.15,'center_y':.6}
                     id:valor_main
 
                 Label:
@@ -868,7 +870,7 @@
                     id:label_sobra
                 Label:
                     font_size:'15sp'
-                    pos_hint:{'x':.00,'center_y':.4}
+                    pos_hint:{'x':.15,'center_y':.4}
                     id:valor_sobra
                 BoxLayout:
                     size_hint_y:.01
@@ -905,14 +907,12 @@
                         color:0,0,1,1
                         bold:True
                         markup:True
-                        text:'[b][size=25dp][u]             --------> Gastos <---------             [/u][/size][/b]\n[color=ffffff][size=13]                 Os gastos não estão somados na porcentagem da divisão[/size][/color]'
+                        text:'[b][size=25dp][u]             --------> Gastos <---------             [/u][/size][/b]\n[color=ffffff][size=11dp]                 Os gastos não estão somados na porcentagem da divisão[/size][/color]'
             Carousel:
                 id:carrocel
                 BoxLayout:
                     orientation:'vertical'
                     canvas:
-#                        Color:
-#                            rgba:0,0,.4,.1
                         Rectangle:
                             size:self.width,self.height
                             pos:self.pos
@@ -941,7 +941,8 @@
                             id:total_gastos
 
                         Button:
-                            size_hint_x:.16
+                            size_hint_x:None
+                            width:'70dp'
                             bold:True
                             color:1,0,0,.7
                             font_size:'40dp'
@@ -959,7 +960,7 @@
                         height:'30dp'
                         Button:
                             size_hint_x:None
-                            width:'50dp'
+                            width:'70dp'
                             color:1,0,0,.7
                             font_size:'40dp'
                             outline_width:2
