@@ -60,8 +60,8 @@ class Botaos(ButtonBehavior,Label):
             Ellipse(size=(self.height,self.height),pos=(self.x+self.width-self.height,self.y))
             Rectangle(size=(self.width-self.height,self.height),pos=(self.x+self.height/2, self.y))
 
-# pos_mes = 2
-# dia_teste = 23
+# dia_teste = 6
+# pos_mes = 8
 
 class Setting(Screen):
     lista_month = ['1-janeiro','2-fevereiro','3-março','4-abril','5-maio','6-junho','7-julho','8-agosto','9-setembro','10-outubro','11-novembro','12-dezembro']
@@ -162,9 +162,7 @@ class Setting(Screen):
         except OSError:
             self.ids.mensagen_setting.text = 'O diretorio não foi excluido'
         else:
-            self.ids.mensagen_setting.text = str('O diretorio foi excluido com sucesso\n Todos arquivos foram apagados!\n   '
-                                                 '                [b][color=7f0000ff][size=30]"Reinicie o app"[/size][/color][/b]...')
-
+            self.popup_mensagen()
 
     def excluir_mes(self,*args):
         """
@@ -188,6 +186,17 @@ class Setting(Screen):
 
     def retornar_msg(self,*args):
         self.ids.mensagen_setting.text = 'Apos incerir a porcentagen o programa recebe \n altomaticamente o valor!'
+
+    def popup_mensagen(self,*args,**kwargs):
+
+        box = BoxLayout()
+        pop = Popup(title='O diretorio foi excluido com sucesso Todos arquivos foram apagados! O aplicativo será fechado',
+                    size_hint=(None,None),size=(350,150),content=box)
+        botao = Button(text='Fechar',color=(.2,0,1,1),size_hint=(None,None),size=('100dp','35dp'),pos_hint={'center_x':.5},on_press=App.get_running_app().stop)
+
+        box.add_widget(botao)
+        pop.open()
+
 
     def popap(self,*args,**kwargs):
 
@@ -240,6 +249,7 @@ class Menu(Screen):
     lista_step = []
     pop_sound = None
     poppap_sound = None
+    desligar = 0
 
     # Variavel para somar o len do arquivo Valores.txt
     find = ''
@@ -249,12 +259,10 @@ class Menu(Screen):
         self.pos_month = date.today().month
         # self.day = dia_teste   # =================== teste
         # self.pos_month = pos_mes  # ================ teste
-        # self.data = Data()
+
         self.file_fechamento1 = 1
         self.file_fechamento2 = 0
         self.file_month = ''
-
-        self.validng_month()
 
         # open or creats the month files
         # abre ou cria os arquivos mês
@@ -282,7 +290,7 @@ class Menu(Screen):
 
             # adds in file sipener_month.txt
             # Adicionando ao arquivo sipner_month.txt
-            self.file_spiner.write(self.lista_month[self.pos_month-1])
+            # self.file_spiner.write(self.lista_month[self.pos_month-1])
 
             # Aqui vira uma variavel para que se não estiver os arquivo na primeira vez que abre a variavel
             #-vai receber o valor da lista
@@ -297,13 +305,15 @@ class Menu(Screen):
             fechamento.write(str(1))
 
 
-        if self.day > self.file_fechamento1:       # comparando o dia para abrir o mes seguinte
+        if self.day >= self.file_fechamento1:       # comparando o dia para abrir o mes seguinte
             file_month = open("month.txt",'w', encoding="utf-8")
             file_month.write(str(self.lista_month[self.pos_month - 1]))
+
 
         # get the directory of user
         # pegando o diretório do usuario
         self.dados_usuario = App.get_running_app().user_data_dir + '/'
+        self.validng_month()
         self.creat_folder()
 
     # Function to valid the month and change the folder of month
@@ -311,11 +321,10 @@ class Menu(Screen):
     def validng_month(self):
         lem = 0
         lista_json = []  # it to reading of file json
-
         self.lista_step.clear()
         # here change the month
         # aqui muda o mês
-        if self.day >= int(self.file_fechamento1):
+        if self.day >= self.file_fechamento1:
             if self.lista_month[self.pos_month - 1] != self.file_month or self.file_month != self.step_spiner :
                 file_month = open('month.txt', 'w', encoding='utf-8')
                 file_month.write(self.lista_month[self.pos_month - 1])
@@ -339,7 +348,7 @@ class Menu(Screen):
         if self.file_fechamento2 != 0:
             if self.day >= self.file_fechamento2:
                 lem = 0
-                l = None
+                l = True
                 try:
                     # this "if" is to close the day of month
                     valor = open(self.dados_usuario + self.lista_month[self.pos_month - 1] + "/" + "Valores.txt", 'r')
@@ -347,7 +356,7 @@ class Menu(Screen):
                     lem = len(v)
                 except FileNotFoundError:
                     pass
-######################################################
+
                 try:
                     lem_file_values = open(self.dados_usuario + self.lista_month[self.pos_month - 1] + '/' + 'lem_file_values.txt', 'r')
                     lem_file_values.read()
@@ -366,11 +375,11 @@ class Menu(Screen):
                     pass
 
                 # if self.lista_step[lem:lem + 1] != []:
-                if l == True:
+                if l == True or self.desligar > 0:
                     pass
                 else:
+                    self.desligar += 1
                     Clock.schedule_once(self.pop_mudar_mes, 1)
-
 
     def close_day(self,*args):
         lem = 0
@@ -430,7 +439,6 @@ class Menu(Screen):
             # Se existir o arquivo então passa
         except FileExistsError :
             pass
-            # self.dados_usuario += file_month.read()
 
     def creat_file(self):
         # Criando os arquivo logo quando abrir o app
@@ -491,6 +499,11 @@ class Menu(Screen):
         pop.open()
         return True
 
+    def desliga(self,*args,**kwargs):
+        # Here is to activate the button month
+        self.ids.bt_active.disabled = False
+
+
     def pop_mudar_mes(self,*args,**kwargs):
 
         box = BoxLayout(spacing='10dp', orientation='vertical')
@@ -501,7 +514,7 @@ class Menu(Screen):
         image = Image(source='image/atencao.png')
 
         bt_sim = Botaos(text='Sim', on_press=self.close_day, on_release=pop.dismiss)
-        bt_nao = Botaos(text='Nao', on_release=pop.dismiss)
+        bt_nao = Botaos(text='Nao', on_press=pop.dismiss , on_release=self.desliga)
 
         box.add_widget(image)
         box_bt.add_widget(bt_sim)
@@ -590,7 +603,7 @@ class Data:
 
 
 class Adicionar(Screen,Data):
-    lista_month = ['1-janeiro', '2-fevereiro', '3-março', '4-abril', '5-maio', '6-junho', '7-julho', '8-agosto','9-setembro', '10-outubro', '11-novembro', '12-dezembro']
+    lista_month = ['1-janeiro','2-fevereiro','3-março','4-abril','5-maio','6-junho','7-julho','8-agosto','9-setembro','10-outubro','11-novembro','12-dezembro']
     lista = []
     get = ''
     def __init__(self,**kwargs):
@@ -616,9 +629,9 @@ class Adicionar(Screen,Data):
             self.pos_month -= 1
 
 
-        self.dados_usuario = App.get_running_app().user_data_dir + '/'+ self.lista_month[self.pos_month-1] +'/'
+        self.dados_usuario = App.get_running_app().user_data_dir + '/'+ self.lista_month[self.pos_month] +'/'
 
-        if self.day > 5:        # ===============  day
+        if self.day == int(self.file_fechamento1):        # ===============  day
             Menu().creat_folder()
 
     def on_pre_enter(self):
@@ -646,13 +659,25 @@ class Adicionar(Screen,Data):
 
         if gastos != 0 and eventos != '':
             # criando arquivo para os eventos de gastos
-            arq_eventos = open(self.dados_usuario + 'arq_eventos.txt', 'a')
-            arq_eventos.write(f'{eventos}  {gastos}\n')
-            self.ids.mensagen_gastos.text = 'Eventos gastos salvos com sucesso!'
-            self.ids.mensagen_add.text = self.get
-            self.ids.text_eventos.text = ''
-            self.ids.text_gastos.text = ''
-            Clock.schedule_once(self.retorna_mesagens, 5)
+            try:
+                arq_eventos = open(self.dados_usuario + 'arq_eventos.txt', 'a')
+                arq_eventos.write(f'{eventos.upper()}:  {float(gastos)} R$\n')
+                self.ids.mensagen_gastos.text = 'Eventos gastos salvos com sucesso!'
+                self.ids.mensagen_add.text = self.get
+                self.ids.text_eventos.text = ''
+                self.ids.text_gastos.text = ''
+                Clock.schedule_once(self.retorna_mesagens, 5)
+            except FileNotFoundError:
+                self.dados_usuario = App.get_running_app().user_data_dir + '/' + self.lista_month[self.pos_month - 1] + '/'
+                arq_eventos = open(self.dados_usuario + 'arq_eventos.txt', 'a')
+                arq_eventos.write(f'{eventos.upper()}:  {float(gastos)} R$\n')
+                self.ids.mensagen_gastos.text = 'Eventos gastos salvos com sucesso!'
+                self.ids.mensagen_add.text = self.get
+                self.ids.text_eventos.text = ''
+                self.ids.text_gastos.text = ''
+                Clock.schedule_once(self.retorna_mesagens, 5)
+
+
 
         elif gastos != 0 and eventos == '':
             self.ids.mensagen_gastos.text = 'Campo Eventos não preenchidos'
@@ -679,7 +704,14 @@ class Adicionar(Screen,Data):
                         self.ids.text_modelo.text = ''
                         self.ids.text_local.text = ''
                         self.ids.text_valor.text = ''
-
+                except FileNotFoundError:
+                    self.dados_usuario = App.get_running_app().user_data_dir + '/' + self.lista_month[self.pos_month - 1] + '/'
+                    with open(self.dados_usuario + '/' + 'SaveData.json', 'w') as data:
+                        self.lista.append(f'{self.data:<25} {modelo:<30} {local:<25} {float(valor_int):>8} R$')
+                        json.dump(self.lista, data)
+                        self.ids.text_modelo.text = ''
+                        self.ids.text_local.text = ''
+                        self.ids.text_valor.text = ''
                 except:
                     self.lista.append(f'{self.data:<25} {modelo:<30} {local:<25} {float(valor_int):>8} R$')
                     # self.ids.mensagen_add.text = 'Nada foi salvo'
@@ -692,6 +724,7 @@ class Adicionar(Screen,Data):
                         self.ids.text_modelo.text = ''
                         self.ids.text_local.text = ''
                         self.ids.text_valor.text = ''
+                        self.lista.clear()
 
                         try:
                             # criando um arquivo Valores
@@ -702,7 +735,21 @@ class Adicionar(Screen,Data):
                         self.get = self.ids.mensagen_add.text
                         Clock.schedule_once(self.retorna_mesagens,5)
                 except FileNotFoundError:
-                    pass
+                    self.dados_usuario = App.get_running_app().user_data_dir + '/' + self.lista_month[self.pos_month - 1] + '/'
+                    with open(self.dados_usuario + '/' + 'SaveData.json', 'w') as data:
+                        json.dump(self.lista, data)
+                        self.ids.text_modelo.text = ''
+                        self.ids.text_local.text = ''
+                        self.ids.text_valor.text = ''
+
+                        try:
+                            # criando um arquivo Valores
+                            self.valor('Valores.txt', str(int(valor_int)))
+                        except ValueError:
+                            pass
+                        self.ids.mensagen_add.text = 'Arquivos salvos com sucesso!'
+                        self.get = self.ids.mensagen_add.text
+                        Clock.schedule_once(self.retorna_mesagens, 5)
 
         try:
             if gastos != 0 and eventos != '':
@@ -744,8 +791,8 @@ class Visualizar(Screen,Data):
         self.soma = Visualizar.soma
 
         self.day = self.data_day
-
         # self.day = dia_teste   # ============= teste day
+
 
         file_step_spiner = open('step_spiner.txt', 'r', encoding='utf-8')
         self.file_step_spiner = file_step_spiner.read()
@@ -756,7 +803,6 @@ class Visualizar(Screen,Data):
         self.texto = str('{:<30} {:<30} {:<30} {:>6}'.format('Data','Modelo','Local','Valor'))
 
     def add(self):
-        soma_atual = 0
         # para tirar os botães
         try:
             sem_botao = open(self.dados_usuario + "lem_file_values.txt", "r")
@@ -837,6 +883,7 @@ class Visualizar(Screen,Data):
 
     def on_pre_leave(self):
         Window.unbind(on_keyboard=self.voltar)
+        self.lista.clear()
         self.ids.coteiner.clear_widgets()
 
     def popap(self,root,*args):
@@ -933,15 +980,18 @@ class TelaTotal(Screen,Data):
     def on_pre_enter(self):
         Window.bind(on_keyboard=self.voltar)
 
+        # Opening file "step_spiner.txt" to give access folder of month
         open_spiner = open('step_spiner.txt', 'r', encoding='utf-8')
         file_spiner = str(open_spiner.read())
 
+        # Access folder month
         self.dados_usuario = self.dados_usuarios + file_spiner + '/'
         open_spiner.close()
 
         self.month = open('month.txt','r',encoding='utf-8')
         month = self.month.read()
 
+        # Here TelaTotal get percentage of file
         # aqui a TelaTotal recebe a porcentagen do arquivo
         try:
             arq_porcentagen = open('porcentagen.txt', 'r')
@@ -967,7 +1017,8 @@ class TelaTotal(Screen,Data):
                 else:
                     self.ids.gastos.add_widget(Box_Total(label=str(iten)))
         except FileNotFoundError:
-            add_arq = ''
+            pass
+            # add_arq = ''
 
         try:
             # Passando a variavel do arquiv com self.ler_valor('gastos.txt') para somas
@@ -1059,13 +1110,11 @@ class TelaTotal(Screen,Data):
         self.ids.porc_gasto.text = f"""
 .. _Total:
 Porcentagen dos gastos
-==========
-
+======================
                 Total_: R$ {arquiv:.1f}
 **[size=80]{self.main_porcentagen}%**   =  {percentual_gasto_main}[/size] 
 
 **[size=80]{100 - int(self.main_porcentagen)}%**  =  {percentual_gasto_sobra}[/size]
-
 """
 
     def deletar(self,*args):

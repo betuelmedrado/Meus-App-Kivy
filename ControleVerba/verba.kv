@@ -119,7 +119,7 @@
                         size:self.width,2
                         pos:self.x, self.y + 2
                 Label:
-                    text:'[b][size=25][color=7f0000ff]Limpar o diretorio de arquivos[/color][/size][/b]\n  Se limpar o diretório você estára\n  apagando todos os  "Mêses"  salvos!'
+                    text:'[b][size=25dp][color=7f0000ff]Limpar o diretorio de arquivos[/color][/size][/b]\n  Se limpar o diretório você estára\n  apagando todos os  "Mêses"  salvos!'
                     markup:True
                 Button:
                     size_hint:None,None
@@ -276,29 +276,72 @@
                 #                outline_color:1,0,0
                 #                disabled_outline_color:True
 
+                # Sonbras
+                BoxLayout:
+                    size_hint:None,.17
+                    width:'108dp'
+                    pos_hint:{'center_x':.595,'center_y':.704}
+                    canvas:
+                        Color:
+                            rgba:1,1,1,1
+                        Ellipse:
+                            pos:self.pos
+                            size:self.size
+
                 BoxLayout:
                     size_hint:None,.15
                     width:'100dp'
                     pos_hint:{'center_x':.6,'center_y':.7}
                     canvas:
+                        Color:
+                            rgb:1,1,1,1
                         Ellipse:
                             pos:self.pos
                             size:self.size
                             source:'image/telaAdd.png'
+
+                # Sonbras
+                BoxLayout:
+                    size_hint:None,.17
+                    width:'108dp'
+                    pos_hint:{'center_x':.595,'center_y':.49}
+                    canvas:
+                        Color:
+                            rgba:1,1,1,1
+                        Ellipse:
+                            pos:self.pos
+                            size:self.size
+
                 BoxLayout:
                     size_hint:None,.15
                     width:'100dp'
                     pos_hint:{'center_x':.6,'center_y':.49}
                     canvas:
+                        Color:
+                            rgb:1,1,1,1
                         Ellipse:
                             size:self.size
                             pos:self.pos
                             source:'image/minhaTela.png'
+
+                # Sonbras
+                BoxLayout:
+                    size_hint:None,.17
+                    width:'108dp'
+                    pos_hint:{'center_x':.595,'center_y':.28}
+                    canvas:
+                        Color:
+                            rgba:1,1,1,1
+                        Ellipse:
+                            pos:self.pos
+                            size:self.size
                 BoxLayout:
                     size_hint:None,.15
                     width:'100dp'
                     pos_hint:{'center_x':.6,'center_y':.28}
                     canvas:
+                        Color:
+                            rgb:1,1,1,1
                         Ellipse:
                             size:self.size
                             pos:self.pos
@@ -320,9 +363,17 @@
                         bold:True
                         pos_hint:{'center_x':.1,'center_y':.91}
                         on_release: app.root.current = 'Adicionar'
-#                    BoxLayout:
-#                        size_hint_y:None
-#                        height:'25dp'
+                    BoxLayout:
+                        size_hint:.85,.0101
+                        pos_hint:{'center_x':.1,'center_y':.98}
+                        canvas:
+                            Color:
+                                rgba:1,1,1,1
+                            Ellipse:
+                                size:self.size
+                                pos:self.pos
+
+
                     Botaos:
                         size_hint_y:.15
                         font_size:sp('30')
@@ -332,9 +383,17 @@
                         outline_color:0,0,0
                         pos_hint:{'center_x':.1,'center_y':.6}
                         on_release: app.root.current = 'Visualizar'
-#                    BoxLayout:
-#                        size_hint_y:None
-#                        height:'25dp'
+                    BoxLayout:
+                        size_hint:.85,.0101
+                        pos_hint:{'center_x':.1,'center_y':.67}
+                        canvas:
+                            Color:
+                                rgba:1,1,1,1
+                            Ellipse:
+                                size:self.size
+                                pos:self.pos
+
+
                     Botaos:
                         size_hint_y:.15
                         font_size:sp('30')
@@ -344,12 +403,22 @@
                         outline_color:0,0,0
                         pos_hint:{'center_x':.1,'center_y':.3}
                         on_release: app.root.current = 'TelaTotal'
+                    BoxLayout:
+                        size_hint:.85,.0101
+                        pos_hint:{'center_x':.1,'center_y':.37}
+                        canvas:
+                            Color:
+                                rgba:1,1,1,1
+                            Ellipse:
+                                size:self.size
+                                pos:self.pos
+
 #                    BoxLayout:
 #                        size_hint_y:None
 #                        height:'20dp'
                     Botaos:
                         size_hint:None,None
-                        width:'60dp'
+                        width:'65dp'
                         height:'30dp'
                         text:'Sair'
                         outline_width:3
@@ -357,6 +426,28 @@
                         pos_hint:{'center_x':.5}
                         pos_hint:{'center_x':.1,'center_y':.1}
                         on_release:root.confirmar()
+                    BoxLayout:
+                        size_hint:.11,.005
+                        pos_hint:{'center_x':.1,'center_y':.134}
+                        canvas:
+                            Color:
+                                rgba:1,1,1,1
+                            Ellipse:
+                                size:self.size
+                                pos:self.pos
+
+
+                    Botaos:
+                        size_hint:None,None
+                        width:'90dp'
+                        height:'30dp'
+                        text:'fechar Mês'
+                        outline_width:3
+                        outline_color:0,0,0
+                        pos_hint:{'right':.9,'center_y':0}
+                        id:bt_active
+                        disabled:True
+                        on_release:root.close_day()
 
 
 <CorAdicionar@Label>:
@@ -907,7 +998,7 @@
                         color:0,0,1,1
                         bold:True
                         markup:True
-                        text:'[b][size=25dp][u]             --------> Gastos <---------             [/u][/size][/b]\n[color=ffffff][size=11dp]                 Os gastos não estão somados na porcentagem da divisão[/size][/color]'
+                        text:'[b][size=25dp][u]             --------> Gastos <---------             [/u][/size][/b]\n[color=ffffff][size=15dp]                 Os gastos não estão somados na porcentagem da divisão[/size][/color]'
             Carousel:
                 id:carrocel
                 BoxLayout:
