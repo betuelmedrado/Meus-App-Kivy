@@ -478,42 +478,44 @@
                     pos_hint:{'center_y':.5}
 
         BoxLayout:
+            size_hint_y:None
+            height:'60dp'
+            canvas:
+                Color:
+                    rgba:.35,.35,.35,.655
+                Rectangle:
+                    size:self.width,self.height
+                    pos:self.x, self.y + 7
+                Color:
+                    rgba:0,0,0,1
+                Rectangle:
+                    size:self.width - 20, 2
+                    pos:self.x + 10, self.y
+            Label:
+                font_size:'25sp'
+                color:1,0,0,1
+                bold:True
+                underline:True
+                outline_width:3
+                outline_color:0,0,0,1
+                text:'Cerviços'
+
+        BoxLayout:
             orientation:'vertical'
             canvas:
                 Color:
                     rgba:0,.31,.51,1
                 Rectangle:
-                    size:self.width - 20, self.height - 60
+                    size:self.width - 20, self.height - 20
                     pos:self.x + 10, self.y - 10
                 Color:
-                    rgba:0,.31,.51,1
-#                    rgba:0,0,0,1
+#                    rgba:0,.31,.51,1
+                    rgba:0,0,0,1
                 Rectangle:
                     size:self.width - 20, 3
                     pos:self.x + 10,self.y - 20
 
-            BoxLayout:
-#                size_hint_y:None
-#                height:'60dp'
-                canvas:
-                    Color:
-                        rgba:.35,.35,.35,.655
-                    Rectangle:
-                        size:self.width,self.height
-                        pos:self.x, self.y + 7
-                    Color:
-                        rgba:0,0,0,1
-                    Rectangle:
-                        size:self.width - 20, 2
-                        pos:self.x + 10, self.y
-                Label:
-                    font_size:'25sp'
-                    color:1,0,0,1
-                    bold:True
-                    underline:True
-                    outline_width:3
-                    outline_color:0,0,0,1
-                    text:'Cerviços'
+
             BoxLayout:
 
             BoxLayout:
