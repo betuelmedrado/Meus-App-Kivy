@@ -95,7 +95,6 @@
                     text:"Excluir"
                     bold:True
                     color:255, 215, 0, 1
-    #                    on_release:root.excluir_mes()
                     on_release:root.popap2()
                 Label:
                     size_hint_y:None
@@ -198,9 +197,7 @@
 #                            size:self.width, 2
 #                            pos:self.x,self.height
 #                    size_hint_x:1 + .2
-                    markup:True
                     text:'Apos inserir a porcentagem o progrâma\n recebe automaticamente o valor!'
-                    id:mensagen_setting
                 Label:
                     size_hint_y:None
                     height:'10dp'
@@ -252,14 +249,13 @@
                     multiline:False
                     id:fechamento2
                 Label:
+
 <Menu>:
     canvas:
         Rectangle:
             size:self.size
             source:'image/textura.png'
-#        size_hint_x:1 + 1
-#        pos_hint:{'center_x':.5}
-#        allow_stretch:True
+
     BoxLayout:
         BoxLayout:
             FloatLayout:
@@ -354,97 +350,115 @@
                 spacing:'3dp'
                 pos_hint:{'center_y':.42}
                 FloatLayout:
-                    Botaos:
+                    Button:
                         size_hint_y:.15
-                        font_size:'30sp'
-                        text:'Adicionar'
-                        outline_width:3
-                        outline_color:0,0,0
+                        border:0,0,0,0
                         bold:True
+                        background_color:0,0,0,0
                         pos_hint:{'center_x':.1,'center_y':.91}
-                        on_release: app.root.current = 'Adicionar'
-                    BoxLayout:
-                        size_hint:.85,.0101
-                        pos_hint:{'center_x':.1,'center_y':.98}
-                        canvas:
-                            Color:
-                                rgba:1,1,1,1
-                            Ellipse:
-                                size:self.size
-                                pos:self.pos
+                        on_release:app.root.current = 'Adicionar'
+                        on_press:root.press_bt(image_adicionar)
+                        Image:
+                            id:image_adicionar
+                            source:'image/botaoVidro.png'
+                            size_hint:None,None
+                            width:'200dp'
+                            height:'4000dp'
+                            center_x:self.parent.center_x
+                            center_y:self.parent.center_y
+                        Label:
+                            text:'Adicionar'
+                            font_size:'30sp'
+                            outline_width:3
+                            outline_color:0,0,0
+                            center_x:self.parent.center_x
+                            center_y:self.parent.center_y
 
 
-                    Botaos:
+
+                    Button:
                         size_hint_y:.15
-                        font_size:sp('30')
-                        bold:True
-                        text:'Visualizar'
-                        outline_width:3
-                        outline_color:0,0,0
                         pos_hint:{'center_x':.1,'center_y':.6}
+                        background_color:0,0,0,0
                         on_release: app.root.current = 'Visualizar'
-                    BoxLayout:
-                        size_hint:.85,.0101
-                        pos_hint:{'center_x':.1,'center_y':.67}
-                        canvas:
-                            Color:
-                                rgba:1,1,1,1
-                            Ellipse:
-                                size:self.size
-                                pos:self.pos
+                        on_press:root.press_bt(image_visualizar)
+                        Image:
+                            id:image_visualizar
+                            source:'image/botaoVidro.png'
+                            size_hint:None,None
+                            width:'200dp'
+                            height:'4000dp'
+                            center_x:self.parent.center_x
+                            center_y:self.parent.center_y
+                        Label:
+                            font_size:sp('30')
+                            bold:True
+                            text:'Visualizar'
+                            outline_width:3
+                            outline_color:0,0,0
+                            center_x:self.parent.center_x
+                            center_y:self.parent.center_y
 
 
-                    Botaos:
+                    Button:
                         size_hint_y:.15
                         font_size:sp('30')
                         bold:True
-                        text:'Total'
-                        outline_width:3
-                        outline_color:0,0,0
+                        background_color:0,0,0,0
                         pos_hint:{'center_x':.1,'center_y':.3}
                         on_release: app.root.current = 'TelaTotal'
-                    BoxLayout:
-                        size_hint:.85,.0101
-                        pos_hint:{'center_x':.1,'center_y':.37}
-                        canvas:
-                            Color:
-                                rgba:1,1,1,1
-                            Ellipse:
-                                size:self.size
-                                pos:self.pos
+                        on_press:root.press_bt(image_total)
+                        Image:
+                            id:image_total
+                            source:'image/botaoVidro.png'
+                            size_hint:None,None
+                            width:'200dp'
+                            height:'4000dp'
+                            center_x:self.parent.center_x
+                            center_y:self.parent.center_y
+                        Label:
+                            font_size:sp('30')
+                            bold:True
+                            text:'Total'
+                            outline_width:3
+                            outline_color:0,0,0
+                            center_x:self.parent.center_x
+                            center_y:self.parent.center_y
 
-#                    BoxLayout:
-#                        size_hint_y:None
-#                        height:'20dp'
-                    Botaos:
+
+                    Button:
                         size_hint:None,None
                         width:'65dp'
                         height:'30dp'
-                        text:'Sair'
-                        outline_width:3
-                        outline_color:0,0,0
+                        background_color:0,0,0,0
                         pos_hint:{'center_x':.5}
                         pos_hint:{'center_x':.1,'center_y':.1}
                         on_release:root.confirmar()
-                    BoxLayout:
-                        size_hint:.11,.005
-                        pos_hint:{'center_x':.1,'center_y':.134}
-                        canvas:
-                            Color:
-                                rgba:1,1,1,1
-                            Ellipse:
-                                size:self.size
-                                pos:self.pos
-
+                        on_press:root.press_bt(image_sair)
+                        Image:
+                            id:image_sair
+                            source:'image/botaoVidro.png'
+                            size_hint:None,None
+                            width:'100dp'
+                            height:'150dp'
+                            center_x:self.parent.center_x
+                            center_y:self.parent.center_y
+                        Label:
+                            text:'Sair'
+                            outline_width:3
+                            outline_color:0,0,0
+                            center_x:self.parent.center_x
+                            center_y:self.parent.center_y
 
                     Botaos:
                         size_hint:None,None
-                        width:'90dp'
+                        width:'60dp'
                         height:'30dp'
                         text:'fechar Mês'
+                        font_size:'10dp'
                         outline_width:3
                         outline_color:0,0,0
-                        pos_hint:{'right':.9,'center_y':0}
+                        pos_hint:{'right':.9,'center_y':.0}
                         id:bt_active
                         disabled:True
                         on_release:root.close_day()
@@ -823,9 +837,7 @@
         pos_hint:{'center_y':.5}
         background_color:1,0,0,1
         text:'X'
-#        on_release:app.root.get_screen('Visualizar').deletar(root),app.root.get_screen('TelaTotal').deletar(root)
         on_release:app.root.get_screen('Visualizar').popap(root) # app.root.get_screen('TelaTotal').popap(root)
-
 
 <Box_Total>:
     # A widget dos Valores para ser adicionado a TelaTotal
@@ -869,7 +881,7 @@
     height: sp(50)
     Label:
         size_hint_x:.03
-        font_size:'10sp'
+        font_size:'15sp'
 #        font_size:self.width
         text_size:None,None
         pos_hint:{'center_x':.5,'center_y':0}
@@ -1000,7 +1012,7 @@
                         color:0,0,1,1
                         bold:True
                         markup:True
-                        text:'[b][size=25dp][u]             --------> Gastos <---------             [/u][/size][/b]\n[color=ffffff][size=15dp]                 Os gastos não estão somados na porcentagem da divisão[/size][/color]'
+                        text:'[b][size=25dp][u]             --------> Gastos <---------             [/u][/size][/b]\n[color=ffffff][size=13dp]                 Os gastos não estão somados na porcentagem da divisão[/size][/color]'
             Carousel:
                 id:carrocel
                 BoxLayout:
@@ -1045,9 +1057,18 @@
                             on_release:carrocel.load_next() , root.atualizar_rst()
                 BoxLayout:
                     orientation:'vertical'
-                    RstDocument:
-#                        background_color:0,0,1,.7
-                        id:porc_gasto
+                    BoxLayout:
+                        canvas.before:
+                            Color:
+                                rgb:1,1,1,1
+                            Rectangle:
+                                size:self.size
+                                pos:self.pos
+
+                        Label:
+                            color:0,0,0,1
+                            markup:True
+                            id:porc_gasto
                     BoxLayout:
                         size_hint_y:None
                         height:'30dp'
