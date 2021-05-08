@@ -25,7 +25,8 @@ import shutil
 from kivy.clock import Clock
 from datetime import date
 
-# completed and Button texture
+# internal commit: position and  error
+
 
 
 Window.clearcolor = .1,.1,.1,1
@@ -499,27 +500,6 @@ class Menu(Screen):
 
     def release_bt(self,*args):
         self.content.source ='image/botaoVidro.png'
-
-    def confirmar(self,*args,**kwargs):
-        # self.pop_sound.play()
-
-        box = BoxLayout(spacing='10dp',orientation='vertical')
-        pop = Popup(title='Deseja realmente sai?', size_hint=(None,None),
-                    size=('200sp','150sp'),content=box)
-        box_bt = BoxLayout(spacing='13dp',size_hint_y=None,height='30sp')
-
-        image = Image(source='image/atencao.png')
-
-        bt_sim = Botaos(text='Sim',on_release=App.get_running_app().stop)
-        bt_nao = Botaos(text='Nao',on_release=pop.dismiss)
-
-        box.add_widget(image)
-        box_bt.add_widget(bt_sim)
-        box_bt.add_widget(bt_nao)
-        box.add_widget(box_bt)
-
-        pop.open()
-        return True
 
     def desliga(self,*args,**kwargs):
         # Here is to activate the button month
