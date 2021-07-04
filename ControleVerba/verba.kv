@@ -18,237 +18,270 @@
 <Setting>:
     BoxLayout:
         orientation:'vertical'
-        ActionBar:
-            pos_hint:{'top':1}
-            ActionView:
-                ActionPrevious:
-                    on_release:app.root.current = 'Menu'
-        BoxLayout:
-            orientation:'vertical'
-            BoxLayout:
-                size_hint_y:.6
-                canvas:
-                    Color:
-                        rgba: .12,.25,0,.255
-                    Rectangle:
-                        size:self.width, self.height - 2
-                        pos:self.x,self.y + 8
-                    Color:
-                        rgba:1,1,1,.4
-                    Rectangle:
-                        size:self.width, 2
-                        pos:self.x, self.y + 2
+        MDToolbar:
+            title:'Configuração'
+            elevation:10
+            left_action_items:[['arrow-left-circle', lambda x: root.back_menu()]]
 
-                Label:
-                    pos_hint:{'x':.6,'center_y':.5}
-                    text:'[b][size=17dp][color=e8ff4cff]Selêcione o Mês[/color][/size][/b]\n  Para visualizar ou excluir'
-                    bold:True
-                    markup:True
-                Label:
-                    size_hint_x:None
-                    width:'40dp'
-                Spinner:
-                    size_hint:None,None
-                    width:'100dp'
-                    height:'35dp'
-                    pos_hint:{'center_y':.5}
-                    bold:True
-                    color:255, 215, 0, 1
-                    values:root.spiner
-                    id:spiner_month
-            BoxLayout:
-                size_hint_y:None
-                height:'40dp'
-                canvas:
-                    Color:
-                        rgba:.16,.16,.16,.252
-                    Rectangle:
-                        size:self.width,self.height - 8
-                        pos:self.x, self.y + 8
-                    Color:
-                        rgba:1,1,1,.4
-                    Rectangle:
-                        size:self.width,2
-                        pos:self.x,self.y + 2
-            BoxLayout:
-                orientation:'vertical'
-                size_hint_y:.9
-                canvas:
-                    Color:
-                        rgba:.12,.25,0,.255
-                    Rectangle:
-                        size:self.width,self.height - 2
-                        pos:self.x,self.y + 7
-                    Color:
-                        rgba:1,1,1,.4
-                    Rectangle:
-                        size:self.width,2
-                        pos:self.pos
-                Label:
-                    text:'      [b][size=20dp][color=e8ff4cff]Exclua o mês selêcionado[/color][/size][/b]\n  Depois de selecionar o mês acima clik aqui em excluir!'
-                    markup:True
-                Button:
-                    size_hint:None,None
-                    width:'100dp'
-                    height:'35dp'
-                    pos_hint:{'center_x':.5}
-                    text:"Excluir"
-                    bold:True
-                    color:255, 215, 0, 1
-                    on_release:root.popap2()
-                Label:
-                    size_hint_y:None
-                    height:'10dp'
-            Label:
-                size_hint_y:None
-                height:'10dp'
+        ScrollView:
 
             BoxLayout:
                 orientation:'vertical'
-
-                canvas:
-                    Color:
-                        rgba:.12,.25,0,.255
-                    Rectangle:
-                        size:self.width,self.height - 8
-                        pos:self.x,self.y + 8
-                    Color:
-                        rgba:1,1,1,.4
-                    Rectangle:
-                        size:self.width,2
-                        pos:self.x, self.y + 2
-                Label:
-                    text:'[b][size=25dp][color=7f0000ff]Limpar o diretorio de arquivos[/color][/size][/b]\n  Se limpar o diretório você estára\n  apagando todos os  "Mêses"  salvos!'
-                    markup:True
-                Button:
-                    size_hint:None,None
-                    width:'80dp'
-                    height:'30dp'
-                    pos_hint:{'center_x':.5}
-                    background_color:1,0,0,1
-                    color:1,1,1,1
-                    text:'Limpar'
-                    on_release:root.popap()
-                Label:
-                    size_hint_y:None
-                    height:'10dp'
-            BoxLayout:
                 size_hint_y:None
-                height:'40dp'
-                canvas:
-                    Color:
-                        rgba:.16,.16,.16,.252
-                    Rectangle:
-                        size:self.width,self.height - 8
-                        pos:self.x, self.y + 8
-                    Color:
-                        rgba:1,1,1,.4
-                    Rectangle:
-                        size:self.width,2
-                        pos:self.x,self.y + 2
-                Label:
-                    text:'% [color=e8ff4cff]Porcentagen[/color] %'
-                    markup:True
-
-            BoxLayout:
-                orientation:'vertical'
-                size_hint_y:.9
-                canvas:
-                    Color:
-                        rgba:.12,.25,0,.255
-                    Rectangle:
-                        size:self.width, self.height - 8
-                        pos:self.x, self.y + 8
-                    Color:
-                        rgba:1,1,1,.4
-                    Rectangle:
-                        size:self.width, 2
-                        pos:self.pos
-                Label:
-#                    pos_hint:{'center_y':.5}
-                    font_size:'15sp'
-                    text:'Defina a sua porcentagen a baixo'
+                height:self.minimum_height
                 BoxLayout:
-                    size_hint_x:None
-                    width:'80dp'
-                    pos_hint:{'center_x':.5}
+                    size_hint_y:None
+                    height:'70dp'
+                    canvas:
+                        Color:
+                            rgba: .12,.25,0,.255
+                        Rectangle:
+                            size:self.width, self.height - 2
+                            pos:self.x,self.y + 8
+                        Color:
+                            rgba:1,1,1,.4
+                        Rectangle:
+                            size:self.width, 2
+                            pos:self.x, self.y + 2
+
+                    Label:
+                        pos_hint:{'x':.6,'center_y':.5}
+                        text:'[b][size=17dp][color=e8ff4cff]Selêcione o Mês[/color][/size][/b]\n  Para visualizar ou excluir'
+                        bold:True
+                        markup:True
+                    Label:
+                        size_hint_x:None
+                        width:'40dp'
+                    Spinner:
+                        size_hint:None,None
+                        width:'100dp'
+                        height:'35dp'
+                        pos_hint:{'center_y':.5}
+                        bold:True
+                        color:255, 215, 0, 1
+                        values:root.spiner
+                        id:spiner_month
+                BoxLayout:
+                    size_hint_y:None
+                    height:'40dp'
+                    canvas:
+                        Color:
+                            rgba:.16,.16,.16,.252
+                        Rectangle:
+                            size:self.width,self.height - 8
+                            pos:self.x, self.y + 8
+                        Color:
+                            rgba:1,1,1,.4
+                        Rectangle:
+                            size:self.width,2
+                            pos:self.x,self.y + 2
+                BoxLayout:
+                    orientation:'vertical'
+                    size_hint_y:None
+                    height:'90dp'
+                    canvas:
+                        Color:
+                            rgba:.12,.25,0,.255
+                        Rectangle:
+                            size:self.width,self.height - 2
+                            pos:self.x,self.y + 7
+                        Color:
+                            rgba:1,1,1,.4
+                        Rectangle:
+                            size:self.width,2
+                            pos:self.pos
+                    Label:
+                        text:'      [b][size=20dp][color=e8ff4cff]Exclua o mês selêcionado[/color][/size][/b]\n  Depois de selecionar o mês acima click aqui em excluir!'
+                        markup:True
+                    Button:
+                        size_hint:None,None
+                        width:'100dp'
+                        height:'35dp'
+                        pos_hint:{'center_x':.5}
+                        text:"Excluir"
+                        bold:True
+                        color:255, 215, 0, 1
+                        on_release:root.popap2()
+                    Label:
+                        size_hint_y:None
+                        height:'5dp'
+                Label:
+                    size_hint_y:None
+                    height:'10dp'
+                BoxLayout:
+                    size_hint_y:None
+                    height:'40dp'
+                    canvas:
+                        Color:
+                            rgba:.16,.16,.16,.252
+                        Rectangle:
+                            size:self.width,self.height - 8
+                            pos:self.x, self.y + 8
+                        Color:
+                            rgba:1,1,1,.4
+                        Rectangle:
+                            size:self.width,2
+                            pos:self.x,self.y + 2
+                    Label:
+                        text:'% [color=e8ff4cff]Porcentagen[/color] %'
+                        markup:True
+
+                BoxLayout:
+                    orientation:'vertical'
+                    size_hint_y:None
+                    height:'90dp'
+                    canvas:
+                        Color:
+                            rgba:.12,.25,0,.255
+                        Rectangle:
+                            size:self.width, self.height - 8
+                            pos:self.x, self.y + 8
+                        Color:
+                            rgba:1,1,1,.4
+                        Rectangle:
+                            size:self.width, 2
+                            pos:self.pos
+                    Label:
+                        size_hint_y:None
+                        height:'10dp'
+                        font_size:'15sp'
+                        text:'Defina a sua porcentagen a baixo'
+                    BoxLayout:
+                        size_hint_x:None
+                        width:'80dp'
+                        pos_hint:{'center_x':.5}
+                        TextInput:
+                            size_hint:None,None
+                            width:'40sp'
+                            height:'30sp'
+                            multiline:False
+                            id:df_porcentagen
+                        Label:
+                            size_hint_x:None
+                            width:'20dp'
+                            font_size:'20sp'
+                            pos_hint:{'center_x':.01}
+                            text:'%'
+                    Label:
+                        canvas:
+                            Color:
+                                rgba:.12,.12,0,.300
+                            Rectangle:
+                                size:self.width, self.height - 8
+                                pos:self.x, self.y + 8
+                        text:'Apos inserir a porcentagem o progrâma\n recebe automaticamente o valor!'
+
+                BoxLayout:
+                    size_hint_y:None
+                    height:'70dp'
+                    canvas:
+                        Color:
+                            rgba:.12,.25,0,.255
+                        Rectangle:
+                            size:self.width, self.height - 8
+                            pos:self.x, self.y + 8
+                        Color:
+                            rgba:1,1,1,.4
+                        Rectangle:
+                            size:self.width, 2
+                            pos:self.pos
+                    Label:
+                        text:'                          [b][size=20dp][color=e8ff4cff][u]Fechamento do Mês![/u][/color][/size][/b]\n    Exemplo:  dia 05 até 20,\n    se não for inserido nenhum vâlor o mês abre dia 1° '
+                        markup:True
+
+
+                BoxLayout:
+                    size_hint_y:None
+                    height:'50dp'
+                    canvas:
+                        Color:
+                            rgba:root.cor
+                        Rectangle:
+                            size:self.width, self.height - 3
+                            pos:self.x, self.y + 10
+                        Color:
+                            rgba:1,1,1,.4
+                        Rectangle:
+                            size:self.width, 2
+                            pos:self.x, self.y
+# MDSWITCH ==============
+                    MDSwitch:
+                        thumb_color_down:app.theme_cls.accent_color
+                        width:'50dp'
+                        active:True
+                        on_active: root.ativo()
+                        id:switch
+
+                    Label:
+                        text:'Dia'
+                        id:dia
                     TextInput:
                         size_hint:None,None
                         width:'40sp'
                         height:'30sp'
-                        multiline:False
-                        id:df_porcentagen
+                        pos_hint:{'center_y':.5}
+                        readonly:True
+                        id:fechamento1
+
                     Label:
-                        size_hint_x:None
-                        width:'20dp'
-                        font_size:'20sp'
-                        pos_hint:{'center_x':.01}
-                        text:'%'
-                Label:
+                        text:'Até'
+                        id:ate
+                    TextInput:
+                        size_hint:None,None
+                        width:'40sp'
+                        height:'30sp'
+                        pos_hint:{'center_y':.5}
+                        multiline:False
+                        id:fechamento2
+                    Label:
+                Snackbar:
+
+
+
+                Widget:
+                    size_hint_y:None
+                    height:'20dp'
                     canvas:
                         Color:
-                            rgba:.12,.12,0,.300
+                            rgba:.12,.25,0,.255
                         Rectangle:
-                            size:self.width, self.height - 8
-                            pos:self.x, self.y + 8
-#                        Color:
-#                            rgba:1,1,1,.4
-#                        Rectangle:
-#                            size:self.width, 2
-#                            pos:self.x,self.height
-#                    size_hint_x:1 + .2
-                    text:'Apos inserir a porcentagem o progrâma\n recebe automaticamente o valor!'
-                Label:
+                            size:self.size
+                            pos:self.pos
+
+
+                BoxLayout:
+                    orientation:'vertical'
                     size_hint_y:None
-                    height:'10dp'
-            BoxLayout:
-                size_hint_y:.6
-                canvas:
-                    Color:
-                        rgba:.12,.12,0,.255
-                    Rectangle:
-                        size:self.width, self.height - 8
-                        pos:self.x, self.y + 8
-                    Color:
-                        rgba:1,1,1,.4
-                    Rectangle:
-                        size:self.width, 2
-                        pos:self.pos
-                Label:
-                    text:'                          [b][size=20dp][color=e8ff4cff][u]Fechamento do Mês![/u][/color][/size][/b]\n    Exemplo:  dia 05 até 20,\n    se não for inserido nenhum vâlor o mês abre dia 1° '
-                    markup:True
-#                    pos_hint:{'center_y':.2}
-
-            BoxLayout:
-                size_hint_y:.400
-    #            pos_hint:{'center_x':.5,'center_y':.1}
-                canvas:
-                    Color:
-                        rgba:.12,.25,0,.255
-                    Rectangle:
-                        size:self.size
-                        pos:self.pos
-                Label:
-                    text:'Dia'
-                TextInput:
-                    size_hint:None,None
-                    width:'40sp'
-                    height:'30sp'
-                    pos_hint:{'center_y':.5}
-                    multiline:False
-                    id:fechamento1
-
-
-                Label:
-                    text:'Até'
-                TextInput:
-                    size_hint:None,None
-                    width:'40sp'
-                    height:'30sp'
-                    pos_hint:{'center_y':.5}
-                    multiline:False
-                    id:fechamento2
-                Label:
+                    height:'90dp'
+                    canvas:
+                        Color:
+                            rgba:.12,.25,0,.255
+                        Rectangle:
+                            size:self.width,self.height - 8
+                            pos:self.x,self.y + 8
+                        Color:
+                            rgba:1,1,1,.4
+                        Rectangle:
+                            size:self.width,2
+                            pos:self.x, self.y + 2
+                    Label:
+                        text:'[b][size=25dp][color=7f0000ff]Limpar o diretorio de arquivos[/color][/size][/b]\n  Se limpar o diretório você estára\n  apagando todos os  "Mêses"  salvos!'
+                        markup:True
+                    Label:
+                        size_hint_y:None
+                        height:'10dp'
+                    Button:
+                        size_hint:None,None
+                        width:'80dp'
+                        height:'30dp'
+                        pos_hint:{'center_x':.5}
+                        background_color:1,0,0,1
+                        color:1,1,1,1
+                        text:'Limpar'
+                        on_release:root.popap()
+                    Label:
+                        size_hint_y:None
+                        height:'5dp'
 
 <Menu>:
     canvas:
@@ -262,7 +295,7 @@
                 Label:
                     size_hint_x:.15
                     pos_hint:{'center_x':.85,'center_y':.9}
-                    font_size:self.width
+                    font_size:self.width + 5
                     bold:True
                     color:0,1,1,1
                     text:'Controle Financeiro'
@@ -450,18 +483,34 @@
                             center_x:self.parent.center_x
                             center_y:self.parent.center_y
 
-                    Botaos:
+                    BoxLayout:
                         size_hint:None,None
-                        width:'60dp'
-                        height:'30dp'
-                        text:'fechar Mês'
-                        font_size:'10dp'
-                        outline_width:3
-                        outline_color:0,0,0
-                        pos_hint:{'right':.9,'center_y':.0}
-                        id:bt_active
-                        disabled:True
-                        on_release:root.close_day()
+                        width:'150'
+                        height:'50'
+                        pos_hint:{'right':.9,'y':-.1}
+                        MDIcon:
+                            size_hint_x:None
+                            width:'30dp'
+#                            color:1,0,0,1
+#                            icon:'arrow-right-bold-outline'
+                            halign:'center'
+                            pos_hint:{'center_y':.25}
+                            id:mdicon
+                        Botaos:
+                            size_hint:None,None
+                            width:'60dp'
+                            height:'25dp'
+                            text:'Fechar Mês'
+                            font_size:'10dp'
+                            pos_hint:{'right':.9,'center_y':.3}
+                            id:bt_active
+                            disabled:True
+                            active:True
+                            outline_width:3
+                            outline_color:0,0,0
+#                            on_release:root.close_day()
+                            on_release:root.pop_opcao()
+
 
 
 <CorAdicionar@Label>:
@@ -476,63 +525,23 @@
 <Adicionar>:
     BoxLayout:
         orientation:'vertical'
-        ActionBar:
+        MDToolbar:
+            title:'Adicionar Serviços'
+            elevation:10
+            left_action_items:[['arrow-left-circle', lambda x: root.back_menu()]]
+            right_action_items:[['dots-vertical', lambda x: root.go_setting()]]
+        MDBoxLayout:
             size_hint_y:None
-            height:'40dp'
-            ActionView:
-                ActionPrevious:
-                    on_release: app.root.current = 'Menu'
-                ActionSeparator:
-                ActionButton:
-                    on_release:app.root.current='setting'
-                    size_hint_y:None
-                    height:60
-                    background_normal:'image/menu.png'
-                    border:0,0,0,0
-                    pos_hint:{'center_y':.5}
-
-        BoxLayout:
-            size_hint_y:None
-            height:'60dp'
-            canvas:
-                Color:
-                    rgba:.35,.35,.35,.655
-                Rectangle:
-                    size:self.width,self.height
-                    pos:self.x, self.y + 7
-                Color:
-                    rgba:0,0,0,1
-                Rectangle:
-                    size:self.width - 20, 2
-                    pos:self.x + 10, self.y
-            Label:
-                font_size:'25sp'
-                color:1,0,0,1
-                bold:True
-                underline:True
-                outline_width:3
-                outline_color:0,0,0,1
-                text:'Cerviços'
-
-        BoxLayout:
+            height:'10dp'
+        MDCard:
             orientation:'vertical'
-            canvas:
-                Color:
-                    rgba:0,.31,.51,1
-                Rectangle:
-                    size:self.width - 20, self.height - 20
-                    pos:self.x + 10, self.y - 10
-                Color:
-#                    rgba:0,.31,.51,1
-                    rgba:0,0,0,1
-                Rectangle:
-                    size:self.width - 20, 3
-                    pos:self.x + 10,self.y - 20
-
-
+            size_hint:.9,.9
+            pos_hint:{'center_x':.5}
+            focus_behavior: False
+            md_bg_color:app.theme_cls.accent_color
             BoxLayout:
 
-            BoxLayout:
+            MDBoxLayout:
                 size_hint_y:None
                 height:'40dp'
                 Label:
@@ -544,11 +553,13 @@
                     bold:True
                     outline_width:2
                     id:modelo
-                TextInput:
-                    size_hint:8,None
+                MDTextFieldRound:
+                    hint_text:'Veiculo'
+                    icon_right:'car'
+                    size_hint:5,None
                     height:'30sp'
-                    pos_hint:{'center_x':.5}
-                    multiline:False
+                    pos_hint:{'center_x':.8,'center_y':.5}
+#                    multiline:False
                     id:text_modelo
 
                 Label:
@@ -565,10 +576,12 @@
                     bold:True
                     outline_width:2
                     id:local
-                TextInput:
-                    size_hint:8,None
+                MDTextFieldRound:
+                    hint_text:'Rua/Av...'
+                    icon_right:'road-variant'
+                    size_hint:5,None
                     height:'30sp'
-                    pos_hint:{'center_x':.5}
+                    pos_hint:{'center_y':.5}
                     multiline:False
                     id:text_local
                 Label:
@@ -593,13 +606,19 @@
                     text:'R$'
                     color:1,1,1,1
                     pos_hint:{'center_x':.2}
-                TextInput:
-                    size_hint:.3,None
-                    height:'30sp'
-                    pos_hint:{'center_x':.5}
-                    multiline:False
-                    id:text_valor
                 Label:
+                    size_hint_x:None
+                    width:'20dp'
+                MDTextFieldRound:
+                    hint_text:'R$:'
+                    icon_right:'cash'
+                    size_hint:.9,None
+                    height:'30sp'
+                    pos_hint:{'center_x': .8,'center_y':.5}
+#                    multiline:False
+                    id:text_valor
+                MDLabel:
+                    size_hint_x:.8
             BoxLayout:
                 Label:
                     color:0,0,0,1
@@ -609,27 +628,16 @@
 
     # Aqui adiciona os gastos
         FloatLayout:
-            BoxLayout:
-                pos_hint:{'center_y':.5}
+            MDCard:
+                elevation:15
+#                focus_behavior:True
                 orientation:'vertical'
+                size_hint:.9,.9
+                pos_hint:{'center_x':.5,'center_y':.5}
                 spacing:'25sp'
-                canvas:
-                    Color:
-                        rgba:0,.31,.51,1
-                    Rectangle:
-                        size:self.width - 20, self.height - 45
-                        pos:self.x + 10, self.y - 10
-                    Color:
-    #                    rgba:0,.31,.51,1
-                        rgba:0,0,0,1
-                    Rectangle:
-                        size:self.width - 20, 3
-                        pos:self.x + 10,self.y - 20
-                    Color:
-                        rgba:0,0,0,1
-                    Rectangle:
-                        size:self.width - 20,3
-                        pos:self.x + 10, self.top - 50
+#                radius:40,40,40,40
+                md_bg_color:app.theme_cls.accent_color
+
                 Label:
                     text:'Valores gastos'
                     id:valor_gastos
@@ -639,6 +647,7 @@
                     outline_color:0,0,0,1
                     underline:3
                     pos_hint:{'center_x':.5,'center_y':1}
+
 
                 BoxLayout:
                     size_hint_y:None
@@ -653,11 +662,17 @@
                         outline_width:2
                         outline_color:0,0,0,1
                         bold:True
-                    TextInput:
-                        size_hint:8,None #dp.2,.05
+                    Widget:
+                        size_hint_x:None
+                        width:'10dp'
+
+                    MDTextFieldRound:
+                        hint_text:'Ex:/gasolina/pedagio/outros'
+                        icon_right:'engine'
+                        size_hint:5,None #dp.2,.05
                         height:'30sp'
-                        pos_hint:{'center_x':.5,'center_y':.8}
-                        multiline:False
+                        pos_hint:{'center_x':.9,'center_y':.8}
+#                        multiline:False
                         id:text_eventos
                     Label:
 
@@ -682,15 +697,21 @@
                         outline_width:2
                         outline_color:0,0,0,1
                         pos_hint:{'center_x':.2,'center_y':.8}
-                    TextInput:
-                        size_hint:.3,None
+                    Label
+                        size_hint_x:None
+                        width:'20dp'
+                    MDTextFieldRound:
+                        hint_text:'R$:'
+                        icon_right:'cash'
+                        size_hint:.8,None
                         height:'30dp'
-                        pos_hint:{'center_x':.5,'center_y':.8}
-                        multiline:False
+                        pos_hint:{'center_x':.3,'center_y':.8}
+#                        multiline:False
                         id:text_gastos
                     Label:
+                        size_hint_x:.8
                 BoxLayout:
-                    Label:
+                    MDLabel:
                         color:0,0,0,1
                         text:'Adicione os gastos com eventos ocorridos e\n valores. '
                         multiline:True
@@ -758,12 +779,11 @@
     CorFund:
     BoxLayout:
         orientation:'vertical'
-        ActionBar:
-            size_hint_y:None
-            height:'30sp'
-            ActionView:
-                ActionPrevious:
-                    on_release: app.root.current = 'Menu'
+        MDToolbar:
+            title:'Visualizar Serviços'
+            elevation:10
+            left_action_items:[['arrow-left-circle', lambda x: root.back_menu()]]
+            right_action_items:[['dots-vertical', lambda x: root.back_setting()]]
 
         BoxLayout:
             padding:10
@@ -794,12 +814,21 @@
                     size_hint_y: None
                     height: self.minimum_height
                     id: coteiner
-        BoxLayout:
+        MDBoxLayout:
             size_hint_y:None
             height:'30sp'
+            md_bg_color:app.theme_cls.primary_color
+            MDRectangleFlatButton:
+                size_hint_y:None
+                height:'30dp'
+                text_color:1,0,0,1
+                line_color:0,0,0,1
+                text:"Mostrar"
+                on_release:root.pop_fechados()
             Label:
                 bold:True
                 font_size:30
+                color:0,0,0,1
                 id:total_valor
 
 
@@ -808,28 +837,30 @@
     # A widget dos Valores para ser adicionado a Visualizar
     size_hint_y:None
     height: sp('50')
-    BoxLayout:
-        padding:10
-        orientation:'vertical'
-        size_hint_y:None
-        height: sp('50')
-        canvas:
-            Color:
-                rgba:.2,.4,.5,.5
-            Rectangle:
-                size:self.width - 8, self.height - 8
-                pos:self.x + 6,self.y + 8
-            Color:
-                rgba:0,0,0,1
-            Rectangle:
-                size:self.width,3
-                pos:self.pos
-        Label:
-            size_hint_x:.03
-            font_size:self.width
-            text_size:None,None
-            pos_hint:{'center_x':.5,'center_y':.5}
-            id:texto
+    ScrollView:
+        orientation:'horizontal'
+        BoxLayout:
+            padding:10
+            orientation:'vertical'
+            size_hint_y:None
+            height: sp('50')
+            canvas:
+                Color:
+                    rgba:.2,.4,.5,.5
+                Rectangle:
+                    size:self.width - 8, self.height - 8
+                    pos:self.x + 6,self.y + 8
+                Color:
+                    rgba:0,0,0,1
+                Rectangle:
+                    size:self.width,3
+                    pos:self.pos
+            Label:
+                size_hint_x:.03
+                font_size:self.width
+                text_size:None,None
+                pos_hint:{'center_x':.5,'center_y':.5}
+                id:texto
     Button:
         size_hint:None,None
         width:'30sp'
@@ -879,12 +910,16 @@
 <BiforeTotal>:
     size_hint_y:None
     height: sp(50)
+
     Label:
+        size_hint_y:None
+        height:'40dp'
         size_hint_x:.03
-        font_size:'15sp'
-#        font_size:self.width
-        text_size:None,None
-        pos_hint:{'center_x':.5,'center_y':0}
+        font_size:'12dp'
+        markup:True
+        outline_width:1
+#        text_size:None,None
+#        enable:True
         id:biforetotal
 
 
@@ -892,12 +927,12 @@
     BoxLayout:
         orientation:'vertical'
         spacing:'15dp'
-        ActionBar
-            size_hint_y:None
-            height:'30sp'
-            ActionView
-                ActionPrevious
-                    on_release:app.root.current = 'Menu'
+
+        MDToolbar:
+            title:'TELA TOTAL'
+            elevation:10
+            right_action_items:[['dots-vertical', lambda x: root.back_setting()]]
+            left_action_items:[['arrow-left-circle', lambda x: root.back_menu()]]
 
         BoxLayout:
             orientation:'vertical'
@@ -1056,30 +1091,72 @@
                             text:'>'
                             on_release:carrocel.load_next() , root.atualizar_rst()
                 BoxLayout:
-                    orientation:'vertical'
+                    spacing:'11dp'
+                    padding:'5dp'
                     BoxLayout:
-                        canvas.before:
-                            Color:
-                                rgb:1,1,1,1
-                            Rectangle:
-                                size:self.size
-                                pos:self.pos
+                        orientation:'vertical'
+                        MDCard:
+                            orientation:'vertical'
+                            elevation:2
+                            radius:40,40,40,40
+                            border:(33,33,33,33)
+                            md_bg_color:app.theme_cls.primary_color
 
-                        Label:
-                            color:0,0,0,1
-                            markup:True
-                            id:porc_gasto
-                    BoxLayout:
-                        size_hint_y:None
-                        height:'30dp'
-                        Button:
-                            size_hint_x:None
-                            width:'70dp'
-                            color:1,0,0,.7
-                            font_size:'40dp'
-                            outline_width:2
-                            outline_color:0,0,0,1
-                            text:'<'
-                            on_release:carrocel.load_previous()
+                            MDLabel:
+                                size_hint_y:None
+                                height:'15dp'
+                                text:"Porcentagen dos gastos"
+                                color:.3,0,.7,1
+                                bold:True
+                                underline:True
+    #                            font_size:self.height + 20
+                            Label:
+                                size_hint_y:None
+                                height:300
+                                color:0,0,0,1
+                                markup:True
+                                id:porc_gasto
+                            Widget:
+                                size_hint_y:None
+                                height:'10dp'
 
-
+                        BoxLayout:
+                            size_hint_y:None
+                            height:'30dp'
+                            Button:
+                                size_hint_x:None
+                                width:'70dp'
+                                color:1,0,0,.7
+                                font_size:'40dp'
+                                outline_width:2
+                                outline_color:0,0,0,1
+                                text:'<'
+                                on_release:carrocel.load_previous()
+                    MDCard:
+                        orientation:'vertical'
+                        elevation:11
+                        size_hint_y:.87
+                        pos_hint:{'center_y':.57}
+                        radius:50,50,50,50
+                        md_bg_color:app.theme_cls.accent_color
+                        id:card
+                        ScrollView
+                            orientation:'vertical'
+                            BoxLayout:
+                                orientation:'vertical'
+                                size_hint_y:None
+                                height:self.minimum_height
+                                id:show_gastos
+                        MDBoxLayout:
+                            size_hint_y:None
+                            height:'30dp'
+                            MDLabel:
+                                font_size:'13sp'
+                                size_hint_x:None
+                                width:'100dp'
+                                bold:True
+                                text:'Fechados Total:'
+                            MDLabel:
+                                size_hint_x:None
+                                width:'50dp'
+                                id:valor_total_fechado
