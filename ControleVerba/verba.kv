@@ -292,6 +292,11 @@
     BoxLayout:
         BoxLayout:
             FloatLayout:
+                MDBanner:
+                    size_hint_x:1
+                    elevation:11
+                    md_bg_color:0,0,0,0
+                    pos_hint:{'center_x':.85,'center_y':.88}
                 Label:
                     size_hint_x:.15
                     pos_hint:{'center_x':.85,'center_y':.9}
@@ -306,16 +311,17 @@
                 #                disabled_outline_color:True
 
                 # Sonbras
-                BoxLayout:
+                MDFloatingActionButton:
+                    elevation_normal:12
                     size_hint:None,.17
                     width:'108dp'
                     pos_hint:{'center_x':.595,'center_y':.704}
-                    canvas:
-                        Color:
-                            rgba:1,1,1,1
-                        Ellipse:
-                            pos:self.pos
-                            size:self.size
+#                    canvas:
+#                        Color:
+#                            rgba:1,1,1,1
+#                        Ellipse:
+#                            pos:self.pos
+#                            size:self.size
 
                 BoxLayout:
                     size_hint:None,.15
@@ -330,16 +336,17 @@
                             source:'image/telaAdd.png'
 
                 # Sonbras
-                BoxLayout:
+                MDFloatingActionButton:
+                    elevation_normal:15
                     size_hint:None,.17
                     width:'108dp'
                     pos_hint:{'center_x':.595,'center_y':.49}
-                    canvas:
-                        Color:
-                            rgba:1,1,1,1
-                        Ellipse:
-                            pos:self.pos
-                            size:self.size
+#                    canvas:
+#                        Color:
+#                            rgba:1,1,1,1
+#                        Ellipse:
+#                            pos:self.pos
+#                            size:self.size
 
                 BoxLayout:
                     size_hint:None,.15
@@ -354,16 +361,18 @@
                             source:'image/minhaTela.png'
 
                 # Sonbras
-                BoxLayout:
+#                BoxLayout:
+                MDFloatingActionButton:
+                    elevation_normal:15
                     size_hint:None,.17
                     width:'108dp'
                     pos_hint:{'center_x':.595,'center_y':.28}
-                    canvas:
-                        Color:
-                            rgba:1,1,1,1
-                        Ellipse:
-                            pos:self.pos
-                            size:self.size
+#                    canvas:
+#                        Color:
+#                            rgba:1,1,1,1
+#                        Ellipse:
+#                            pos:self.pos
+#                            size:self.size
                 BoxLayout:
                     size_hint:None,.15
                     width:'100dp'
@@ -383,6 +392,7 @@
                 spacing:'3dp'
                 pos_hint:{'center_y':.42}
                 FloatLayout:
+
                     Button:
                         size_hint_y:.15
                         border:0,0,0,0
@@ -891,11 +901,17 @@
             Rectangle:
                 size:self.width, 3
                 pos:self.pos
-        Label:
-            size_hint_x:.03
+        MDLabel:
+#            size_hint_x:.03
+            halign:'center'
             font_size:'15sp'
             text_size:None,None
-            pos_hint:{'center_x':.5,'center_y':0}
+
+            color:.1,.1,.1,1
+            outline:True
+            outline_width:1
+            outline_color:0,0.5,.5,1
+
             id:texto
     Button:
         size_hint:None,None
@@ -1079,6 +1095,11 @@
                         Label:
                             font_size:'20sp'
                             id:total_gastos
+                            color:0,.5,.4,1
+                            outline:True
+                            outline_width:3
+
+
 
                         Button:
                             size_hint_x:None
