@@ -1,0 +1,430 @@
+
+<Manager>:
+    Login:
+        name:'login'
+    Register:
+        name:'register'
+    Grade:
+        name:'grade'
+    Award:
+        name:'award'
+
+
+
+
+<Login>:
+    MDBoxLayout:
+        orientation:'vertical'
+        MDToolbar
+            title:'Logar'
+            elevation:10
+            right_action_items:[['trash-can',lambda x: root.snackbar_delet()]]
+        MDBoxLayout:
+            FloatLayout:
+                MDLabel:
+                    halign:'center'
+                    pos_hint:{'center_y':.9}
+                    font_size:20
+                    bold:True
+                    text:'Informe o nome da tabela ou \ncadastre uma!'
+
+                MDTextFieldRect:
+                    size_hint:.8,None
+                    height:'40sp'
+                    font_size:'20dp'
+                    hint_text:'Nome'
+                    pos_hint:{'center_x':.5,'center_y':.8}
+                    id:text_nome_login
+
+                BoxLayout:
+#                    size_hint:None,None
+                    pos_hint:{'center_y':.3}
+                    Image:
+                        source:'icon/rifa.png'
+
+                MDFillRoundFlatIconButton:
+                    icon:'account-key-outline'
+                    text:'Logar'
+                    pos_hint:{'center_x':.5,'center_y':.65}
+                    on_release:root.logar()
+
+                MDLabel:
+                    halign:'center'
+                    font_size:'20sp'
+                    pos_hint:{'center_y':.4}
+                    id:warning
+                MDBoxLayout:
+                    size_hint:.6,None
+                    height:'50dp'
+                    pos_hint:{'center_x':.4,'center_y':.1}
+#                    canvas:
+#                        Color:
+#                            rgba:0,0,1,1
+#                        Rectangle:
+#                            size:self.width,self.height
+#                            pos:self.x,self.y
+                    MDLabel:
+                        font_size:'20sp'
+                        pos_hint:{}
+                        id:se_cadastre
+                    MDIcon:
+                        size_hint_x:None
+                        icon:''
+                        width:'20dp'
+                        id:icon
+
+                MDFloatingActionButton:
+                    icon:'plus-circle-outline'
+                    pos_hint:{'center_x':.8,'y':.05}
+                    md_bg_color: app.theme_cls.primary_color
+                    on_release: root.if_go_register()
+
+<Snack>:
+    text:'Deseja excluir a tabela!'
+    duration:3
+    MDFlatButton:
+        text:'excluir!'
+        text_color:1,0,0,1
+        pos_hint:{'right':.9,'center_y':.05}
+        on_release:root.delet_table()
+
+
+<Register>:
+    ScrollView:
+        BoxLayout:
+            orientation:'vertical'
+            MDToolbar:
+                title:'Inicie a tabela'
+                elevation:10
+                left_action_items:[['arrow-left', lambda x:root.return_login()]]
+            FloatLayout:
+                MDLabel:
+                    text:'Escolha o tamanho da tabela'
+                    halign:'center'
+                    pos_hint:{'center_y':.95}
+                MDCard:
+                    elevation:9
+                    size_hint:.9,None
+                    height:'50dp'
+                    pos_hint:{'center_x':.5,'center_y':.85}
+                    radius:11,11,11,11
+                    BoxLayout:
+                        orientation:'vertical'
+    #                    size_hint_x:None
+    #                    width:'100dp'
+                        MDLabel:
+                            text:'50'
+                            halign:'center'
+                            id:cinquenta
+                        CheckBox:
+                            color:0,0,1,1
+                            group:'check'
+                            id:check_cinquenta
+                            on_press:root.select_val_table(cinquenta)
+                    BoxLayout:
+                        orientation:'vertical'
+    #                    size_hint_x:None
+    #                    width:'100dp'
+                        MDLabel:
+                            text:'100'
+                            halign:'center'
+                            id:cem
+                        CheckBox:
+                            color:0,0,1,1
+                            group:'check'
+                            id:check_cem
+                            on_press:root.select_val_table(cem)
+        # Date =================
+                MDLabel:
+                    text:'Escolha uma data para a prêmiação!'
+                    halign:'center'
+                    pos_hint:{'center_y':.73}
+                MDCard:
+                    size_hint:.9,None
+                    height:'50dp'
+                    elevation:10
+                    pos_hint:{'center_x':.5,'center_y':.64}
+                    padding:7
+                    radius:22,22,22,22
+                    Widget:
+                    MDBoxLayout:
+                        size_hint_x:None
+                        width:'200dp'
+                        spacing:11
+                        MDTextFieldRect:
+                            hint_text:'Dia'
+                            multiline:False
+                            id:day
+                        MDLabel:
+                            size_hint_x:None
+                            width:5
+                            text:'/'
+                        MDTextFieldRect:
+                            hint_text:'Mês'
+                            multiline:False
+                            id:month
+                        MDLabel:
+                            size_hint_x:None
+                            width:5
+                            text:'/'
+                        MDTextFieldRect:
+                            hint_text:'Ano'
+                            multiline:False
+                            id:year
+                    Widget:
+
+                MDLabel:
+                    text:'Qual é o prêmio?'
+                    halign:'center'
+                    pos_hint:{'center_y':.54}
+                MDCard:
+                    size_hint:.9,None
+                    height:'60dp'
+                    elevation:10
+                    pos_hint:{'center_x':.5,'center_y':.45}
+                    radius:11,11,11,11
+                    MDTextFieldRect:
+                        id:premio
+
+                MDCard:
+                    orientation:'vertical'
+                    size_hint:.9,None
+                    height:'120dp'
+                    pos_hint:{'center_x':.5,'center_y':.25}
+                    elevation:10
+                    radius:11,11,11,11
+                    MDLabel:
+                        text:'Cadastre uma tabela com um nome!'
+                        halign:'center'
+                        pos_hint:{'center_y':.6}
+                    MDTextFieldRect:
+                        size_hint:.8,None
+                        height:'40sp'
+                        font_size:'20sp'
+                        hint_text:'Nome'
+                        pos_hint:{'center_x':.5,'center_y':.6}
+                        id:cadastro_nome
+                    Widget:
+                        size_hint_y:None
+                        height:'10dp'
+
+                MDFillRoundFlatIconButton:
+                    elevation:9
+                    icon:'table-large'
+                    text:'enter'
+                    pos_hint:{'center_x':.5,'center_y':.05}
+                    id:bt
+                    on_release:root.register()
+
+
+<Grade>:
+    FloatLayout:
+        Label:
+            size_hint_x:None
+            width:'400dp'
+            font_size:'400dp'
+            color:.3,.22,1,1
+            bold:True
+            pos_hint:{'center_x':.5,'center_y':.5}
+            text:'3'
+
+    BoxLayout:
+        orientation:'vertical'
+        spacing:3
+        MDToolbar:
+            id:name_table
+            elevation:10
+            left_action_items:[['arrow-left-thick', lambda x:root.return_login()]]
+            right_action_items:[['format-list-numbered', lambda x:root.go_person()],['gift-outline', lambda x: root.calling_award()]]
+        BoxLayout:
+            BoxLayout:
+                size_hint:.9,.9
+                padding:5
+                pos_hint:{'center_x':.5,'center_y':.5}
+                id:box
+        Widget:
+            size_hint_y:None
+            height:'10dp'
+
+
+<Award>:
+    MDBoxLayout:
+        orientation:'vertical'
+        MDToolbar:
+            title:'!Premiado!'
+            elevation:10
+            left_action_items:[['arrow-left-thick', lambda x: root.return_home()]]
+        FloatLayout:
+            Image:
+                source:'icon/confetes.png'
+                pos_hint:{'center_x':.2,'center_y':.0}
+            BoxLayout:
+                pos_hint:{'center_y':.9}
+                Image:
+                    source:'icon/vencedor.png'
+            MDLabel:
+                bold:True
+                markup:True
+                color:0,0,1,1
+                halign:'center'
+                pos_hint:{'center_y':.6}
+                id:winner
+
+            MDLabel:
+                markup:True
+                halign:'center'
+                pos_hint:{'center_y':.3}
+                id:award
+
+<Botao>:
+
+    Button:
+        id:botao
+        size_hint:1,None
+        height:'40dp'
+        color:0,0,.5,1
+        outline:True
+        outline_color:1,1,1,1
+        outline_width:1
+        bold:True
+        opacity:.90
+        border:0,0,0,0
+        on_release: root.popup(self)
+
+<BotaoRed>:
+    Button:
+        id:botaored
+        size_hint:1,None
+        height:'40dp'
+        bold:True
+        outline:True
+        outline_color:0,0,0,1
+        outline_width:1
+        opacity:.90
+        border:0,0,0,0
+        background_color:1,0,0,1
+        on_release: root.popup_person(self)
+
+<ContentRed>:
+    orientation:'vertical'
+
+    MDCard:
+        size_hint_y:.2
+        padding:9
+        spacing:5
+        radius:11,11,11,11
+        MDLabel:
+            bold:True
+            halign:'center'
+            font_size:'20sp'
+            id:person
+
+    MDCard:
+        orientation:'vertical'
+        radius:11,11,11,11
+        Widget:
+            size_hint_y:None
+            height:'30dp'
+        MDLabel
+            size_hint_y:None
+            height:'60dp'
+            markup:True
+            text:'Foi Pago?'
+            halign:'center'
+            id:pago
+        MDBoxLayout:
+            MDBoxLayout
+                orientation:'vertical'
+                spacing:20
+                MDLabel:
+                    text:'Sim'
+                    halign:'center'
+                    id:sim
+                MDCheckbox:
+#                    size_hint_x:None
+#                    width:'30dp'
+                    group:'pago'
+                    id:check_sim
+                    on_press:root.change_paid('Sim')
+                Widget:
+
+            MDBoxLayout:
+                orientation:'vertical'
+                spacing:20
+                MDLabel:
+                    halign:'center'
+                    text:'Não'
+                    id:nao
+                MDCheckbox:
+#                    size_hint_x:None
+#                    width:'30dp'
+                    id:check_nao
+                    group:'pago'
+                    on_press:root.change_paid('Não')
+                Widget:
+#                    size_hint_y:None
+#                    height:'20dp'
+
+
+# Conteudo do Popup do button  ================
+<Content>:
+    orientation:'vertical'
+
+    MDCard:
+        size_hint_y:None
+        height:'80dp'
+        MDCard:
+            padding:9
+            spacing:5
+            radius:11,11,11,11
+            MDTextField:
+                hint_text:'Nome'
+                line_color_normal:1,0,0,1
+                focus:True
+                id:person
+            MDTextFieldRect:
+                size_hint:None,None
+                width:'50dp'
+                height:'30dp'
+                readonly:True
+                id:id_namber
+    MDCard:
+        orientation:'vertical'
+        radius:11,11,11,11
+        MDLabel
+            size_hint_y:None
+            height:'50dp'
+            text:'Pago?'
+            halign:'center'
+        MDBoxLayout:
+            MDBoxLayout
+                orientation:'vertical'
+                spacing:30
+                MDLabel:
+                    text:'Sim'
+                    halign:'center'
+                    id:sim
+                MDCheckbox:
+                    group:'pago'
+                    on_press:root.check(sim)
+            MDBoxLayout:
+                orientation:'vertical'
+                spacing:30
+                MDLabel:
+                    halign:'center'
+                    text:'Não'
+                    id:nao
+                MDCheckbox:
+                    group:'pago'
+                    on_press:root.check(nao)
+        Widget:
+            size_hint_y:None
+            height:'10dp'
+        MDFillRoundFlatIconButton:
+            pos_hint:{'center_x':.5}
+            icon:'content-save-edit'
+            text:'ADD'
+            on_release:root.get_content()
+        MDBoxLayout:
+            size_hint_y:None
+            height:'15dp'
