@@ -10,13 +10,11 @@
         name:'award'
 
 
-
-
 <Login>:
     MDBoxLayout:
         orientation:'vertical'
         MDToolbar
-            title:'Logar'
+            title:'Sua Rifa'
             elevation:10
             right_action_items:[['trash-can',lambda x: root.snackbar_delet()]]
         MDBoxLayout:
@@ -24,7 +22,7 @@
                 MDLabel:
                     halign:'center'
                     pos_hint:{'center_y':.9}
-                    font_size:20
+                    font_size:'20dp'
                     bold:True
                     text:'Informe o nome da tabela ou \ncadastre uma!'
 
@@ -37,20 +35,27 @@
                     id:text_nome_login
 
                 BoxLayout:
-#                    size_hint:None,None
+                    size_hint_y:.7
+#                    height:'300dp'
                     pos_hint:{'center_y':.3}
-                    Image:
-                        source:'icon/rifa.png'
+                    canvas:
+                        Color:
+                            rgba:1,1,1,1
+                        Rectangle:
+                            size:self.size
+                            pos:self.pos
+                            source:'icon/rifa.png'
 
                 MDFillRoundFlatIconButton:
                     icon:'account-key-outline'
                     text:'Logar'
+                    font_size:'16dp'
                     pos_hint:{'center_x':.5,'center_y':.65}
                     on_release:root.logar()
 
                 MDLabel:
                     halign:'center'
-                    font_size:'20sp'
+                    font_size:'24sp'
                     pos_hint:{'center_y':.4}
                     id:warning
                 MDBoxLayout:
@@ -78,16 +83,6 @@
                     pos_hint:{'center_x':.8,'y':.05}
                     md_bg_color: app.theme_cls.primary_color
                     on_release: root.if_go_register()
-
-<Snack>:
-    text:'Deseja excluir a tabela!'
-    duration:3
-    MDFlatButton:
-        text:'excluir!'
-        text_color:1,0,0,1
-        pos_hint:{'right':.9,'center_y':.05}
-        on_release:root.delet_table()
-
 
 <Register>:
     ScrollView:
@@ -157,7 +152,8 @@
                             id:day
                         MDLabel:
                             size_hint_x:None
-                            width:5
+                            width:'5dp'
+                            font_size:'20dp'
                             text:'/'
                         MDTextFieldRect:
                             hint_text:'Mês'
@@ -165,7 +161,8 @@
                             id:month
                         MDLabel:
                             size_hint_x:None
-                            width:5
+                            width:'5dp'
+                            font_size:'20dp'
                             text:'/'
                         MDTextFieldRect:
                             hint_text:'Ano'
@@ -219,27 +216,32 @@
 
 <Grade>:
     FloatLayout:
-        Label:
-            size_hint_x:None
-            width:'400dp'
-            font_size:'400dp'
-            color:.3,.22,1,1
-            bold:True
-            pos_hint:{'center_x':.5,'center_y':.5}
-            text:'3'
+
+    # Here is to never repeat of number table
+#        Label:
+#            size_hint_x:None
+#            width:'400dp'
+#            font_size:'400dp'
+#            color:.3,.22,1,1
+#            bold:True
+#            pos_hint:{'center_x':.5,'center_y':.5}
+#            text:'3'
+#            id:table_number
 
     BoxLayout:
         orientation:'vertical'
         spacing:3
         MDToolbar:
             id:name_table
-            elevation:10
+            elevation:5
             left_action_items:[['arrow-left-thick', lambda x:root.return_login()]]
             right_action_items:[['format-list-numbered', lambda x:root.go_person()],['gift-outline', lambda x: root.calling_award()]]
         BoxLayout:
-            BoxLayout:
+            MDCard:
                 size_hint:.9,.9
-                padding:5
+                elevation:11
+                radius:12,12,12,12
+                padding:'10dp'
                 pos_hint:{'center_x':.5,'center_y':.5}
                 id:box
         Widget:
@@ -255,24 +257,46 @@
             elevation:10
             left_action_items:[['arrow-left-thick', lambda x: root.return_home()]]
         FloatLayout:
-            Image:
-                source:'icon/confetes.png'
-                pos_hint:{'center_x':.2,'center_y':.0}
             BoxLayout:
+                size_hint_y:.3
                 pos_hint:{'center_y':.9}
-                Image:
-                    source:'icon/vencedor.png'
+                canvas:
+                    Color:
+                        rgba:1,1,1,1
+                    Rectangle:
+                        size:self.size
+                        pos:self.pos
+                        source:'icon/vencedor.png'
+            BoxLayout:
+                size_hint_y:.7
+                pos_hint:{'center_x':.2,'center_y':.05}
+                canvas:
+                    Color:
+                        rgba:1,1,1,1
+                    Rectangle:
+                        size:self.size
+                        pos:self.pos
+                        source:'icon/confetes.png'
+
             MDLabel:
                 bold:True
                 markup:True
-                color:0,0,1,1
+#                color:0,0,1,1
+                color:.4,.4,.0,1
+                font_size:'40dp'
                 halign:'center'
                 pos_hint:{'center_y':.6}
+                outline:True
+                outline_width:'2dp'
+                outline_color:.0,0,0,1
                 id:winner
 
             MDLabel:
                 markup:True
+                bold:True
                 halign:'center'
+                font_size:'40dp'
+                italic:True
                 pos_hint:{'center_y':.3}
                 id:award
 
@@ -280,34 +304,34 @@
 
     Button:
         id:botao
-        size_hint:1,None
-        height:'40dp'
+        size_hint:1,1
         color:0,0,.5,1
         outline:True
+        font_size:'20dp'
         outline_color:1,1,1,1
         outline_width:1
         bold:True
-        opacity:.90
+        opacity:.80
         border:0,0,0,0
-        on_release: root.popup(self)
+        on_release: root.press_button()
+        on_press:root.popup(self)
 
 <BotaoRed>:
     Button:
         id:botaored
-        size_hint:1,None
-        height:'40dp'
+        size_hint:1,1
+        font_size:'20dp'
         bold:True
         outline:True
         outline_color:0,0,0,1
         outline_width:1
-        opacity:.90
+        opacity:.80
         border:0,0,0,0
         background_color:1,0,0,1
         on_release: root.popup_person(self)
 
 <ContentRed>:
     orientation:'vertical'
-
     MDCard:
         size_hint_y:.2
         padding:9
@@ -330,6 +354,7 @@
             height:'60dp'
             markup:True
             text:'Foi Pago?'
+            font_size:'25dp'
             halign:'center'
             id:pago
         MDBoxLayout:
@@ -380,7 +405,6 @@
             MDTextField:
                 hint_text:'Nome'
                 line_color_normal:1,0,0,1
-                focus:True
                 id:person
             MDTextFieldRect:
                 size_hint:None,None
@@ -424,6 +448,7 @@
             pos_hint:{'center_x':.5}
             icon:'content-save-edit'
             text:'ADD'
+            on_press:root.aperto()
             on_release:root.get_content()
         MDBoxLayout:
             size_hint_y:None

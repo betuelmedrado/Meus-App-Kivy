@@ -2,7 +2,7 @@
 
 from kivymd.app import MDApp
 from kivymd.uix.boxlayout import MDBoxLayout
-from kivymd.uix.button import MDRectangleFlatButton, MDFillRoundFlatIconButton, MDIconButton,MDFlatButton
+from kivymd.uix.button import MDRectangleFlatButton, MDFillRoundFlatIconButton, MDIconButton, MDFlatButton
 from kivymd.uix.snackbar import Snackbar
 from kivymd.uix.label import MDLabel
 from kivymd.uix.datatables import MDDataTable
@@ -13,23 +13,31 @@ from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 from kivy.uix.boxlayout import BoxLayout
-from kivy.lang import Builder
 from kivy.uix.popup import Popup
+from kivy.uix.widget import Widget
+from kivy.lang import Builder
 from kivy.clock import Clock
+from kivy.core.window import Window
+
 
 from datetime import date
+import time
 from random import choice
+
 
 import os
 import json
 import sqlite3
 
+
+# Here is to when press the keyboar elevation the textinput
+Window.softinput_mode = 'below_target'
+
 # import sys
 # sys.setrecursionlimit(5000)
 
-from kivy.core.window import Window
 
-Window.size = 350,600
+# Window.size = 350,600
 
 class Manager(ScreenManager):
     pass
@@ -46,6 +54,27 @@ class Botao(BoxLayout):
         super().__init__(**kwargs)
         self.ids.botao.text = label
         self.label = label
+
+    def press_button(self):
+        self.num_button = self.ids.botao.text
+        self.ids.botao.background_color = 1,0,0,1
+        Clock.schedule_once(self.checking,15)
+
+    def checking(self,*args):
+        check = self.open_databese()
+
+        if check == []:
+            self.ids.botao.background_color = 1,1,1,1
+        else:
+            pass
+
+    # opening the data base to check and change the color of button
+    def open_databese(self):
+        conn = sqlite3.connect('numberTable.db')
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM rifa WHERE Number == "'+str(self.num_button)+'" ')
+
+        return cursor.fetchall()
 
     def popup(self,msg,*args):
 
@@ -66,7 +95,7 @@ class Botao(BoxLayout):
         except AttributeError:
             pop.open()
 
-        return pop
+        return msg
 
 class BotaoRed(BoxLayout):
     def __init__(self,msg,*args,**kwargs):
@@ -75,19 +104,39 @@ class BotaoRed(BoxLayout):
 
     def popup_person(self,number,*args,**kwargs):
 
+        self.num = number.text
+
         box = BoxLayout(orientation='vertical')
+        box_button = BoxLayout(size_hint_y=(.20))
         pop = Popup(title='Informações',size_hint=(None,None),
                     size=('300dp','400dp'), content=box)
 
-        bt = MDIconButton(icon='credit-card-refund',pos_hint=({'center_x':.5}),on_release=pop.dismiss)
+        bt = MDIconButton(icon='credit-card-refund',pos_hint=({'center_x':.1}),on_release=pop.dismiss)
+        bt_exclud = MDIconButton(icon='delete-forever',pos_hint=({'center_x': 1}),on_release=self.delet_edit)
+
+        box_button.add_widget(Widget())
+        box_button.add_widget(bt)
+        box_button.add_widget(Widget())
+        box_button.add_widget(bt_exclud)
 
         box.add_widget(ContentRed(number.text))
-        box.add_widget(bt)
+        box.add_widget(box_button)
 
         try:
             pop.show()
         except AttributeError:
             pop.open()
+
+    def delet_edit(self,*args):
+        try:
+            conn = sqlite3.connect('numberTable.db')
+            cursor = conn.cursor()
+            cursor.execute('DELETE FROM rifa WHERE Number == "'+self.num+'"')
+            conn.commit()
+            Grade().snackbar('Nome excluido com sucesso!')
+            Grade().on_pre_enter()
+        except:
+            Grade().snackbar('Não foi possivel!')
 
 
     def exit(self):
@@ -112,13 +161,17 @@ class ContentRed(BoxLayout):
 
         content = cursor.fetchall()
 
-        self.ids.person.text = f'{str(content[0][1])} - {str(content[0][2])}'
-        self.ids.pago.text = f'Foi pago?\n\n' \
-                             f'[color=#4682B4][size=30][b]{str(content[0][3])}[/b][/size][/color]'
-        if content[0][3] == 'Sim':
-            self.ids.check_sim.active = True
-        else:
-            self.ids.check_nao.active = True
+        try:
+            self.ids.person.text = f'{str(content[0][1])} - {str(content[0][2])}'
+            self.ids.pago.text = f'[size={"17dp"}]Foi pago?[/size]\n\n' \
+                                 f'[color=#4682B4][size={"30dp"}][b]{str(content[0][3])}[/b][/size][/color]\n'
+            if content[0][3] == 'Sim':
+                self.ids.check_sim.active = True
+            else:
+                self.ids.check_nao.active = True
+        except:
+            print('erro data_pesor content_red!')
+
 
     def change_paid(self,msg):
         conn = sqlite3.connect('numberTable.db')
@@ -138,6 +191,13 @@ class Content(BoxLayout):
     def check(self,msg):
         self.pago = str(msg.text)
 
+    def aperto(self,*args,**kwargs):
+        # b = Botao()
+        # b.teste()
+        # grade = Grade()
+        MDApp.get_running_app().root.curretn = 'grade'
+
+
     def get_content(self):
         person = self.ids.person.text
         number = self.ids.id_namber.text
@@ -155,9 +215,7 @@ class Content(BoxLayout):
                 cursor.execute('INSERT INTO rifa("Person", "Number", "Paid", "Activate")'
                                'VALUES("'+str(person.title())+'" , "'+number+'" , "'+str(self.pago)+'" , "'+str(active)+'" ) ; ')
                 Grade().snackbar('Salvo com sucesso!')
-
-
-
+                Grade()
             except AttributeError:
                 Grade().snackbar('Informe se ja foi pago ou não!')
             except sqlite3.IntegrityError:
@@ -166,6 +224,7 @@ class Content(BoxLayout):
             conn.commit()
         else:
             Grade().snackbar('Não foi informado nenhum nome!')
+
 
 class Login(Screen):
 
@@ -264,32 +323,64 @@ class Login(Screen):
         except AttributeError:
             snack.show()
 
-    def snackbar_delet(self,*args,**kwargs):
+    def snackbar_delet(self,msg='Deseja excluir a tabgela!',*args,**kwargs):
 
-        # Here is class
+        # Here is a class
         # Aqui é uma classe
-        Snack().show()
+        try:
+            snackbar = Snackbar(
+                text=str(msg),
+                snackbar_x="10dp",
+                snackbar_y="10dp",
+            )
+            snackbar.duration=5
+            snackbar.size_hint_x = (
+                                       Window.width - (snackbar.snackbar_x * 2)
+                                   ) / Window.width
+            snackbar.buttons = [
 
+                MDFlatButton(
+                    text="Excluir",
+                    # text_color=(1,0,0,1),
+                    on_press=self.calling,
+                    on_release=snackbar.dismiss,
+                ),
+                MDFlatButton(
+                    text="CANCEL",
+                    # text_color=(1,0,0,1),
+                    on_release=snackbar.dismiss,
+                ),
+            ]
+            snackbar.show()
+        except AttributeError:
+            snackbar.open()
 
-class Snack(Snackbar):
+    def calling(self,*args):
+        Snack().delet_table()
+
+class Snack:
+
     def delet_table(self):
+        try:
+            with open('rifa.json','w') as rifa:
+                json.dump([],rifa)
 
-        # try:
-        with open('rifa.json','w') as rifa:
-            json.dump([],rifa)
+            with open('get_name.json','w') as get_name:
+                json.dump('',get_name)
 
-        with open('get_name.json','w') as get_name:
-            json.dump('',get_name)
+            with open('award.json','w') as award:
+                json.dump([],award)
 
-        with open('award.json','w') as award:
-            json.dump([],award)
+            try:
+                os.remove('winner.json')
+            except FileNotFoundError:
+                pass
 
-        os.remove('winner.json')
+            self.delet_db()
 
-        self.delet_db()
-        self.snack_warning('Tabela excluida com sucesso!')
-        # except:
-        #     self.snack_warning('Não foi possivel excluir a tabela!')
+            self.snack_warning('Tabela excluida com sucesso!')
+        except:
+            self.snack_warning('Não foi possivel excluir a tabela!')
 
 
     def delet_db(self,*args,**kwargs):
@@ -300,10 +391,11 @@ class Snack(Snackbar):
 
     def snack_warning(self,msg):
         snackbar = Snackbar(text=str(msg))
+        snackbar.animation_dir = 'Top'
         try:
-            snackbar.open()
-        except AttributeError:
             snackbar.show()
+        except AttributeError:
+            snackbar.open()
 
 
 class Register(Screen,Date):
@@ -347,24 +439,27 @@ class Register(Screen,Date):
     # Validing date
     def validing_date(self,day,month,year):
 
-        if day == '' or month == '' or  year == '':
-            self.snackbar('Campos data vazio!')
-        elif int(year) < int(self.year):
-            self.snackbar('Ano abaixo do atual!')
-        elif int(self.month) == 1 and int(day) > 31 or int(self.month) == 3 and int(day) > 31 or int(self.month) == 5 and int(day) > 31 or int(self.month) == 7 and int(day) > 31 or int(self.month) == 8 and int(day) > 31 or int(self.month) == 10 and int(day) > 31 or int(self.month) == 12 and int(day) > 31:
-            self.snackbar('Dia invalido esse mês vai até 31')
-        elif int(self.month) == 2 and int(day) > 29:
-            self.snackbar('Dia invalido Fevereiro vai até "29" !')
-        elif int(self.month) == 4 and int(day) > 30 or int(self.month) == 6 and int(day) > 30 or int(self.month) == 9 and int(day) > 30 or int(self.month) == 11 and int(day) > 30 :
-            self.snackbar('Dia invalido esse mês vai até "30" ')
-        elif int(month) > 12:
-            self.snackbar('Mês invalido!')
-        else:
-            if len(day) > 2 or len(day) < 0 or len(month) > 2 or len(month) < 0 or len(year) > 4 or len(year) < 4:
-                self.snackbar('Campos data invalido')
-                return False
+        try:
+            if day == '' or month == '' or  year == '':
+                self.snackbar('Campos data vazio!')
+            elif int(year) < int(self.year):
+                self.snackbar('Ano abaixo do atual!')
+            elif int(self.month) == 1 and int(day) > 31 or int(self.month) == 3 and int(day) > 31 or int(self.month) == 5 and int(day) > 31 or int(self.month) == 7 and int(day) > 31 or int(self.month) == 8 and int(day) > 31 or int(self.month) == 10 and int(day) > 31 or int(self.month) == 12 and int(day) > 31:
+                self.snackbar('Dia invalido esse mês vai até 31')
+            elif int(self.month) == 2 and int(day) > 29:
+                self.snackbar('Dia invalido Fevereiro vai até "29" !')
+            elif int(self.month) == 4 and int(day) > 30 or int(self.month) == 6 and int(day) > 30 or int(self.month) == 9 and int(day) > 30 or int(self.month) == 11 and int(day) > 30 :
+                self.snackbar('Dia invalido esse mês vai até "30" ')
+            elif int(month) > 12:
+                self.snackbar('Mês invalido!')
             else:
-                return True
+                if len(day) > 2 or len(day) < 0 or len(month) > 2 or len(month) < 0 or len(year) > 4 or len(year) < 4:
+                    self.snackbar('Campos data invalido')
+                    return False
+                else:
+                    return True
+        except ValueError:
+            self.snackbar('Só é válido numeros nos campos data')
 
 
     def register(self):
@@ -417,13 +512,16 @@ class Register(Screen,Date):
 
     def snackbar(self, msg):
         self.snack = Snackbar(text=str(msg))
-        self.snack.show()
-
+        try:
+            self.snack.open()
+        except AttributeError:
+            self.snack.show()
 
 class Grade(Screen):
 
     lista = {}
     lista_chosen = []
+    cont = 5
     def __init__(self,*args,**kwargs):
         super().__init__(**kwargs)
 
@@ -438,22 +536,38 @@ class Grade(Screen):
         # self.year = 2021
 
     def on_pre_enter(self):
+
         self.chosen()
         self.get_name()
         self.build_grid()
+        self.if_winner()
 
+    def on_leave(self):
+        self.lista_chosen = []
+
+    def if_winner(self):
         # see if already completed the table to send the mesagem
         # vendo se já completou a tabela para enviar a mensagem
         length_chose = self.get_name()
         length_table = self.chosen()
 
+
         if len(length_table) >= int(length_chose['Quantidade']):
             try:
                 with open('winner.json','r') as win:
                     json.load(win)
-                pass
             except FileNotFoundError:
                 self.snackbar('A Premiação já pode ser aberta!')
+
+        active = False
+        try:
+            with open('winner.json','r') as win:
+                json.load(win)
+            active = True
+        except FileNotFoundError:
+            pass
+
+        return active
 
     # function to get number chosen
     def get_name(self):
@@ -463,12 +577,13 @@ class Grade(Screen):
 
     # Function to create the table
     def build_grid(self,*args,**kwargs):
-        self.grid = GridLayout(cols=10, spacing=2)
         self.ids.box.clear_widgets()
+        self.grid = GridLayout(cols=10, spacing=2)
 
         nome = self.lista["Nome"]
         valor = int(self.lista["Quantidade"])
         self.ids.name_table.title = str(nome+' - '+str(valor))
+        active = self.if_winner()
 
         if valor == 50:
             self.grid.cols = 5
@@ -477,13 +592,15 @@ class Grade(Screen):
             if c == 0:
                 pass
             else:
-                if c in self.lista_chosen:
+                if c in set(self.lista_chosen):
                     self.grid.add_widget(BotaoRed(msg=str(c)))
                 else:
-                    self.grid.add_widget(Botao(label=str(c)))
+                    if self.if_winner() == True:
+                        self.grid.add_widget(Botao(label=str(c), disabled=True))
+                    else:
+                        self.grid.add_widget(Botao(label=str(c)))
 
         self.ids.box.add_widget(self.grid)
-        self.lista_chosen = []
 
     def return_login(self):
         MDApp.get_running_app().root.current = 'login'
@@ -493,9 +610,14 @@ class Grade(Screen):
         cursor = conn.cursor()
         cursor.execute('SELECT * FROM rifa')
 
+        # geting the amount of person
+        # obtendo a quantidade de pessoas
+        cont = []
+
         lista = []
         for item in cursor.fetchall():
             lista += (item[1], item[2], item[3])
+            cont.append(item[1])
 
         data_table = MDDataTable(
             column_data=[
@@ -509,7 +631,7 @@ class Grade(Screen):
         )
 
         box = BoxLayout(orientation='vertical')
-        pop = Popup(title='Lista', content=box)
+        pop = Popup(title=f'{len(cont)} - Participantes', content=box)
         bt = MDIconButton(icon='credit-card-refund',pos_hint=({'cente_x': .5}),on_release=pop.dismiss)
         box.add_widget(data_table)
         box.add_widget(bt)
@@ -526,9 +648,38 @@ class Grade(Screen):
         chosen_button = cursor.fetchall()
         for iten in chosen_button:
             self.lista_chosen.append(iten[0])
-            # self.lista_chosen.append(iten)
 
         return set(self.lista_chosen)
+
+    # this method is to the do cont
+    # Esse Método é para fazer a contagem
+    def time(self,*args):
+        Clock.schedule_once(self.times,1)
+        Clock.schedule_once(self.clear_screen,1.7)
+
+    # Complemento da class time
+    def times(self,*args):
+        self.box = BoxLayout()
+        label = Label(text=str(self.cont), font_size=('400dp'), bold=True,
+                      color=(0,0,1,1))
+        label.outline_color = (0,0,0,1)
+        label.outline_width = 5
+        self.box.add_widget(label)
+        self.add_widget(self.box)
+
+        self.cont -= 1
+        if self.cont < 0:
+            pass
+        else:
+            self.time()
+
+        if self.cont < 0 :
+            self.entry_award()
+
+    # To clear the box of count
+    # Para limpar a caixa de contagem
+    def clear_screen(self,*args):
+        self.box.clear_widgets()
 
     def calling_award(self,**kwargs):
         date = {}
@@ -546,29 +697,47 @@ class Grade(Screen):
         # vendo se já completou a tabela
         length_table = self.chosen()
 
+        if_win = self.if_winner()
 
-        if int(self.day) >= int(day) and int(self.month) >= int(month) and int(self.year) >= int(year) or int(self.month) > int(month) and int(self.year) >= int(year) or int(self.year) > int(year):
-            MDApp.get_running_app().root.current = 'award'
-        elif len(length_table) >= int(tamanho):
-            MDApp.get_running_app().root.current = 'award'
+        if if_win == False:
+            if int(self.day) >= int(day) and int(self.month) >= int(month) and int(self.year) >= int(year) or int(self.month) > int(month) and int(self.year) >= int(year) or int(self.year) > int(year):
+                self.pop_award()
+            elif len(length_table) >= int(tamanho):
+                self.pop_award()
+            else:
+                self.snackbar(f'O premio só vai ser liberado na data correta! {str(day).zfill(2)}/{str(month).zfill(2)}/{year}')
         else:
-            self.snackbar(f'O premio só vai ser liberado na data correta!')
-            Clock.schedule_once(self.clock_data, 3)
+            self.entry_award()
 
-    def clock_data(self,*args):
-        with open('rifa.json','r') as content:
-            date = json.load(content)
 
-        day = int(date[0]['Dia'])
-        month = int(date[0]['Mês'])
-        year = int(date[0]['Ano'])
-
-        self.snackbar(f'    Data:  {day}/{month}/{year}')
+    def entry_award(self,*args):
+        MDApp.get_running_app().root.current = 'award'
 
     def snackbar(self,msg,*args,**kwargs):
         snack = Snackbar(text=str(msg),duration=(5))
-        snack.show()
 
+        try:
+            snack.open()
+        except AttributeError:
+            snack.show()
+
+    def pop_award(self,*args):
+
+        box = BoxLayout(orientation='vertical')
+        box_button = BoxLayout(spacing='11dp')
+        label = Label(text='Cuidado Você está preste a abrir a rifa!\nDesejá abrir? ',color=(1,0,0,1))
+
+        pop = Popup(title='Deseja abrir a rifa!',size_hint=(None,None), size=('300dp','200dp'),content=box)
+
+        bt_sim = Button(text='Sim',on_press=self.time, on_release=pop.dismiss)
+        bt_nao = Button(text='Não', on_release=pop.dismiss)
+
+        box.add_widget(label)
+        box_button.add_widget(bt_sim)
+        box_button.add_widget(bt_nao)
+        box.add_widget(box_button)
+
+        pop.open()
 
 class Award(Screen):
 
@@ -603,8 +772,8 @@ class Award(Screen):
         with open('rifa.json','r') as award:
             premio = json.load(award)
 
-        self.ids.winner.text = f'[size=50]{c[0][1]}[/size] \n\n Numero sorteado \n\n [size=50]{c[0][2]}[/size] '
-        self.ids.award.text = f'[size=20]Premiação[/size] \n\n [size=30][b]{premio[0]["Premio"]}[/b][/size]'
+        self.ids.winner.text = f'{c[0][1]} \n\n [size={"30dp"}]Numero sorteado[/size] \n\n {c[0][2]} '
+        self.ids.award.text = f'[size={"30dp"}]Premiação[/size]\n[b]{premio[0]["Premio"]}[/b]'
 
     def _winner(self,msg):
 
